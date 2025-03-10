@@ -1,0 +1,45 @@
+/* Theme classes */
+[data-bs-theme="light"] .bg-inverse {
+    background-color: #212529 !important;
+    /* Oscuro */
+    color: #f8f9fa !important;
+    /* Claro */
+}
+
+[data-bs-theme="dark"] .bg-inverse {
+    background-color: #f8f9fa !important;
+    /* Claro */
+    color: #212529 !important;
+    /* Oscuro */
+}
+
+
+/* Animation classes */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Classes */
+.animated-card {
+    animation: fadeInDown 1s ease-out;
+    transition: all 0.5s;
+}
+
+.rotate-180 {
+    transform: rotate(180deg);
+}
+
+.card-img{
+    width: 100%;
+    height: 18rem;
+    object-fit:cover;
+}
