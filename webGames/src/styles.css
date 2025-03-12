@@ -43,3 +43,45 @@
     height: 18rem;
     object-fit:cover;
 }
+
+.card-blue{
+    color: #0d6efd;
+}
+.card-indigo{
+    color: #6610f2;
+}
+.card-purple{
+    color: #6f42c1;
+}
+.card-pink{
+    color: #d63384;
+}
+.card-red{
+    color: #dc3545;
+}
+.card-orange{
+    color: #fd7e14;
+}
+.card-yellow{
+    color: #ffc107;
+}
+.card-green{
+    color: #198754;
+}
+.card-teal{
+    color: #20c997;
+}
+.card-cyan{
+    color: #0dcaf0;
+}
+.card-black{
+    color: #212529;
+}
+.card-white{
+    color: #e9ecef;
+}
+
+
+
+
+
