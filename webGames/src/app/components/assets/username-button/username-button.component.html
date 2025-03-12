@@ -1,0 +1,12 @@
+@if (changeUsername) {
+<form class="input-group" [formGroup]="form" (ngSubmit)="updateUsername()">
+    <input type="text" class="form-control" id="inputUsername" placeholder="Nombre de usuario"
+        formControlName="username">
+    <button class="btn btn-dark bi-check input-group-text border"></button>
+</form>
+}
+@else {
+<button type="button" class="btn btn-dark px-4" [ngClass]="buttonHover ? 'bi-pencil-square' : 'bi-person'"
+    (mouseover)="buttonHover = true" (mouseleave)="buttonHover = false" (click)="changeUsername = true">
+    {{form.value.username ? form.value.username : 'Invitado'}}</button>
+}

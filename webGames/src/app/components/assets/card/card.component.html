@@ -1,0 +1,36 @@
+@if(card.isHidden){
+    <div class="card border-0">
+        <img [src]="'images/back'+selectedBack" alt="reverso" class="p-0" style="width: 210px; height: 312px;">
+    </div>
+    }
+    @else {
+    <div class="card bg-light border" [ngClass]="' card-'+ cardSize">
+        <!-- Top card -->
+        <div class="row">
+            <div class="col text-start ps-4" [ngClass]="getColor()">
+                {{card.name}}
+            </div>
+            <div class="col text-end">
+                <i class="bi p-3" [ngClass]="[getIcon(), getColor()]"></i>
+            </div>
+        </div>
+        
+        <!-- Center content -->
+        <div class="d-flex justify-content-center align-items-center h-100">
+            <svg xmlns="http://www.w3.org/2000/svg" width="96px" height="96px" fill="currentColor" [ngClass]="getColor()"
+                class="bi" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" id="centerSuit" [attr.d]="getSVG()" />
+            </svg>
+        </div>
+    
+        <!-- Bottom card -->
+        <div class="row rotate-180">
+            <div class="col text-start ps-4" [ngClass]="getColor()">
+                {{card.name}}
+            </div>
+            <div class="col text-end">
+                <i class="bi p-3" [ngClass]="[getIcon(), getColor()]"></i>
+            </div>
+        </div>
+    </div>
+    }

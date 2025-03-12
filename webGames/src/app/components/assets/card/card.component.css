@@ -1,0 +1,37 @@
+.card-small {
+    height: 234px;
+    width: 158px;
+    font-size: 28px;
+
+    svg {
+        height: 72px;
+        width: 72px;
+    }
+}
+
+.card-medium {
+    height: 312px;
+    width: 210px;
+    font-size: 34px;
+
+    svg {
+        height: 96px;
+        width: 96px;
+    }
+    
+    img {
+        height: 326px;
+        width: 224px;
+    }
+}
+
+.card-large {
+    height: 468px;
+    width: 315px;
+    font-size: 50px;
+
+    svg {
+        height: 144px;
+        width: 144px;
+    }
+}
