@@ -5,9 +5,16 @@ import { Preferences } from '../interfaces/models';
   providedIn: 'root'
 })
 export class StorageService {
+  defaultPreferences: Preferences = {
+    username: 'invitado',
+    darkMode: true,
+    cardBack: 'Waves.png',
+    volume: 0.5
+  }
 
   constructor() { }
 
+  // Generic methods
   setItem(key: string, value: any) {
     localStorage.setItem(key, JSON.stringify(value));
   }
@@ -16,7 +23,13 @@ export class StorageService {
     let item = localStorage.getItem(key);
     return item ? JSON.parse(item) : null;
   }
+  
+  clearAll(){
+    localStorage.clear();
+  }
 
+  
+  // Preferences managment methods
   setPreferences(userPreferences: Preferences) {
     let preferences = this.getItem('preferences') as Preferences[] || [];
 
@@ -32,13 +45,30 @@ export class StorageService {
     this.setItem('preferences', preferences);
   }
 
-
-  getPreferences(username: string = ''): Preferences | Preferences[] | null {
-    let preferences = this.getItem('preferences') as Preferences[] || [];
-
-    return username ? preferences.find(pref => pref.username === username) || null : preferences;
+  getPreferences(username: string = ''): Preferences | Preferences[] {
+    const preferencesList = (this.getItem('preferences') as Preferences[]) || [];
+  
+    if (!username) {
+      return preferencesList.length ? preferencesList : [this.defaultPreferences];
+    }
+  
+    return preferencesList.find(pref => pref.username === username) ?? this.defaultPreferences;
   }
 
+  removePreferences(username: string = '') {
+    if (username) {
+      let preferences = this.getItem('preferences') as Preferences[] || [];
+      let index = preferences.findIndex(pref => pref.username === username);
+
+      if (index !== -1) {
+        preferences.splice(index, 1);
+        this.setItem('preferences', preferences);
+      }
+    }
+    else{
+      this.setItem('preferences', []);
+    }
+  }
 
 
 }
