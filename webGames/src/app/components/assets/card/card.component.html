@@ -1,6 +1,6 @@
 @if(card.isHidden){
     <div class="card border-0">
-        <img [src]="'images/back'+selectedBack" alt="reverso" class="p-0" style="width: 210px; height: 312px;">
+        <img [src]="'images/back'+selectedBack" alt="reverso" class="p-0" [ngClass]="' card-'+ cardSize">
     </div>
     }
     @else {

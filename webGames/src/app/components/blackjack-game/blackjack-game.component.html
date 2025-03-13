@@ -1,1 +1,52 @@
-<p>blackjack-game works!</p>
+
+<div class="p-3 my-5" style="min-height: 402px;">
+    <!-- Cartas del dealer -->
+    <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center gap-2 flex-wrap pt-3">
+            @for (card of dealerHand; track $index) {
+            <div class="animated-card">
+                <app-card [card]="card" />
+            </div>
+            }
+        </div>
+        <div>
+            <img [src]="'images/deck'+userPreferences?.cardBack" alt="deck" class="p-0 mx-4" (click)="startGame()"
+                style="width: 224px; height: 326px;">
+            <p class="d-flex justify-content-center fs-5 text-secondary" [ngClass]="{'d-none': inGame}">Haz clic para
+                {{playerHand.length > 0 ? 'reiniciar' : 'empezar'}}.
+            </p>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="d-flex pt-5 justify-content-center">
+    <!-- Puntajes -->
+    <div class="col-2 row gap-3 justify-content-center px-4 text-center">
+        <div class="bg-danger rounded justify-content-center align-items-center d-flex col-12 fs-3">
+            {{ 'Dealer: '+getHandTotal(dealerHand) }}</div>
+        <div class="bg-success rounded justify-content-center align-items-center d-flex col-12 fs-3">
+            {{ username +': '+ getHandTotal(playerHand) }}</div>
+    </div>
+
+    <!-- Menu del jugador -->
+    <div class="col-8 p-3 rounded bg-primary-subtle" style="min-height: 372px;">
+        <!-- Cartas del jugador -->
+        <div class="d-flex justify-content-center gap-5 px-5 flex-wrap pt-3" style="transform: translateX(-80px);">
+            @for (card of playerHand; track $index) {
+            <div class="animated-card" style="width: 50px;">
+                <app-card [card]="card" />
+            </div>
+            }
+        </div>
+    </div>
+
+    <!-- Acciones -->
+    <div class="col-2 row gap-3 justify-content-center px-4">
+        <button class="btn btn-danger col-12 fs-3" (click)="stand()"
+            [disabled]="!inGame || !inPlayersTurn">Plantarse</button>
+        <button class="btn btn-success col-12 fs-3" (click)="hit()" [disabled]="!inGame || !inPlayersTurn">Pedir
+            carta</button>
+    </div>
+</div>
