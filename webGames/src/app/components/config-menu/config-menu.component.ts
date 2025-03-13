@@ -14,7 +14,6 @@ import { CommonModule } from '@angular/common';
   styleUrl: './config-menu.component.css'
 })
 export class ConfigMenuComponent implements OnInit{
-  username: string = 'Invitado';
   cardBacks: string[] = [
     "Cats.png",
     "Flowers.png",
@@ -23,8 +22,8 @@ export class ConfigMenuComponent implements OnInit{
     "Waves.png"
   ]
   preferences: Preferences = {
-    username: this.username,
-    darkMode: false,
+    username: 'Invitado',
+    darkMode: true,
     cardBack: 'Waves.png',
     volume: 0.5
   }
@@ -37,26 +36,32 @@ export class ConfigMenuComponent implements OnInit{
   
   
   ngOnInit(): void {
-    this.username = this.userService.getUsername();
-    this.preferences = this.storageService.getPreferences(this.username) as Preferences;
+    let loggedUser = this.userService.getUsername();
+    this.preferences = this.storageService.getPreferences(loggedUser) as Preferences;
+    console.log("Configuración de", loggedUser, "cargada:", this.preferences);
+    
   }
   
   changeCardBack() {
-    this.storageService.setPreferences(this.preferences);
+    this.saveConfig();
     console.log("Cambiando carta trasera a", this.preferences.cardBack);
   }
   
-  saveConfig(user: string){
-    let preferences: Preferences = {
-      username: user,
-      darkMode: false,
-      cardBack: 'Waves.png',
-      volume: 0.5
-    }
-    this.storageService.setPreferences(preferences);
+  changeVolume() {
+    this.saveConfig();
+    console.log("Cambiando volumen a", this.preferences.volume);
   }
   
-  showConfig(){
-    console.log(this.storageService.getPreferences());
+  changeTheme() {
+    this.saveConfig();
+    console.log("Cambiando modo oscuro a", this.preferences.darkMode);
+  }
+  
+  saveConfig() {
+    let loggedUser = this.userService.getUsername();
+    this.preferences.username = loggedUser;
+    this.storageService.setPreferences(this.preferences);
+    console.log("Configuración de", loggedUser, "guardada:", this.preferences);
+    
   }
 }
