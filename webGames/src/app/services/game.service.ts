@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Card } from '../interfaces/models';
+import Swal, { SweetAlertIcon } from 'sweetalert2';
+import { concat } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
   suits = ['heart', 'diamond', 'club', 'spade'];
-  colors = ['blue', 'indigo', 'purple', 'pink', 'red', 'orange', 'yellow', 'green', 'teal', 'cyan', 'black']
+  colors = ['blue', 'indigo', 'purple', 'pink', 'red', 'orange', 'yellow', 'green', 'teal', 'cyan', 'black', 'gray'];
 
   constructor() { }
 
-  
+
   //
   generateBlackjackDeck() {
     let deck: Card[] = [];
@@ -21,10 +23,35 @@ export class GameService {
       deck = deck.concat(cards);
     });
 
-    return this.shuffleDeck(deck);
+    return this.shuffle(deck);
   }
 
-  
+
+  //
+  generateMemoryDeck(quantity: number = 20) {
+    let colors = this.shuffle(this.colors);
+    let deck: Card[] = [];
+
+    while (deck.length < quantity) {
+      let suit = this.suits[Math.floor(Math.random() * this.suits.length)];
+      let color = colors.pop()!;
+
+      let card = {
+        value: 1,
+        name: '',
+        suit: suit,
+        color: color,
+        isHidden: true,
+        selected: false
+      };
+
+      deck.push(card, { ...card });
+    }
+
+    return this.shuffle(deck);
+  }
+
+
   //
   generateSwit(suit: string, color: string): Card[] {
     let cards: Card[] = [];
@@ -46,22 +73,32 @@ export class GameService {
     return cards;
   }
 
-  
+
   //
-  shuffleDeck(deck: Card[]) {
-    for (let index = deck.length - 1; index > 0; index--) {
+  shuffle(list: any[]) {
+    for (let index = list.length - 1; index > 0; index--) {
       const newIndex = Math.floor(Math.random() * (index + 1));
-      [deck[index], deck[newIndex]] = [deck[newIndex], deck[index]];
+      [list[index], list[newIndex]] = [list[newIndex], list[index]];
     }
-    
-    return deck;
+
+    return [...list];
   }
 
-  
+
   //
   async setDelay(ms: number = 1000) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
-  
+
+
+  //
+  sendAlert(title: string, text: string, icon: SweetAlertIcon = 'info') {
+    Swal.fire({
+      title: title,
+      text: text,
+      icon: icon,
+      confirmButtonText: 'Ok'
+    });
+  }
 
 }

@@ -48,5 +48,9 @@ export class AudioService {
   playVictoy() {
     this.playAudio("victory.mp3");
   }
+  
+  playSuccess() {
+    this.playAudio("success.mp3");
+  }
 
 }
