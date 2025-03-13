@@ -1,1 +1,22 @@
-<p>memory-game works!</p>
+<div class="d-flex justify-content-center">
+    <div class="col-10">
+        <div class="d-flex justify-content-between align-items-center px-2">
+            <div class="d-flex gap-2 p-2">
+                <h2 class="text-start">Vidas </h2>
+                @for (live of getLives(); track $index) {
+                <i [class]="'gap-2 fs-3 ' + live"></i>
+                }
+            </div>
+            <button class="btn btn-primary bi-arrow-clockwise fs-4" (click)="startGame()"></button>
+        </div>
+
+        <div class="row justify-content-center gap-4">
+            @for (card of memoryDeck; track $index) {
+            <div class="d-flex justify-content-center col animated-card " (click)="flipCard(card)">
+                <app-card [card]="card" [cardSize]="dificulty.cardSize" />
+            </div>
+            }
+        </div>
+
+    </div>
+</div>
