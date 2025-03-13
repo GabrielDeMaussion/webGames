@@ -1,13 +1,23 @@
-<button type="button" (click)="saveConfig('uno')">
-    Guardar config
-</button>
-<button type="button" (click)="saveConfig('dos')">
-    Guardar config
-</button>
-<button type="button" (click)="saveConfig('tres')">
-    Guardar config
-</button>
+<div class="container border border-left p-4">
+    <div class="row">
+        <h3>Configuración</h3>
+        <hr>
+        <div class="col">
+            <h4>1. Dorso</h4>
+            <div class="row justify-content-between">
+                @for (back of cardBacks; let i = $index; track $index) {
+                <div class="form-check col py-2">
+                    <input class="form-check-input d-none" type="radio" name="cartas" [id]="'carta' + i"
+                        [(ngModel)]="preferences.cardBack" [value]="back" (change)="changeCardBack()">
+                    <label [for]="'carta' + i" class="carta-label">
+                        <img [src]="'images/back'+ back" alt="reverso" role="button" class="rounded p-1"
+                            [ngClass]="{ 'border border-primary border-3': preferences.cardBack === back }">
+                    </label>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
 
-<button type="button" (click)="showConfig()">
-    mostrar config
-</button>
+
+</div>

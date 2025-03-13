@@ -7,6 +7,11 @@
         height: 72px;
         width: 72px;
     }
+    
+    img {
+        height: 234px;
+        width: 158px;
+    }
 }
 
 .card-medium {
