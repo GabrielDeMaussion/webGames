@@ -32,12 +32,14 @@ export class MemoryGameComponent implements OnInit {
   }
 
 
-  startGame() {
+  async startGame() {
     this.memoryDeck = [];
     this.selectDifficulty();
     this.memoryDeck = this.gameService.generateMemoryDeck(this.dificulty.deckSize);
     this.remainingLives = this.dificulty.lives;
     this.selectedCards = [];
+    
+    await this.hiddeCards();
   }
 
 
@@ -54,7 +56,7 @@ export class MemoryGameComponent implements OnInit {
   }
 
   async flipCard(card: Card) {
-    if (!this.selectedCards.includes(card) && !this.checkingMatch && this.remainingLives > 0) {
+    if (!this.selectedCards.includes(card) && card.isHidden && !this.checkingMatch && this.remainingLives > 0) {
       this.checkingMatch = true;
       card.isHidden = !card.isHidden;
       this.audioService.playCardDealRandom();
@@ -85,6 +87,11 @@ export class MemoryGameComponent implements OnInit {
     else if (this.memoryDeck.every(card => !card.isHidden)) {
       this.gameService.sendAlert('Fin del juego', 'Ganaste!', 'success');
     }
+  }
+  
+  async hiddeCards() {
+    await this.gameService.setDelay(2000);
+    this.memoryDeck.forEach(card => card.isHidden = true);
   }
   
   selectDifficulty() {

@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './config-menu.component.css'
 })
 export class ConfigMenuComponent implements OnInit{
+  preferencesList: Preferences[] = [];
   cardBacks: string[] = [
     "Cats.png",
     "Flowers.png",
@@ -21,12 +22,7 @@ export class ConfigMenuComponent implements OnInit{
     "Panter.png",
     "Waves.png"
   ]
-  preferences: Preferences = {
-    username: 'Invitado',
-    darkMode: true,
-    cardBack: 'Waves.png',
-    volume: 0.5
-  }
+  preferences: Preferences | null = null;
 
   constructor(
     private readonly cookiesService: CookiesService,
@@ -37,31 +33,37 @@ export class ConfigMenuComponent implements OnInit{
   
   ngOnInit(): void {
     let loggedUser = this.userService.getUsername();
-    this.preferences = this.storageService.getPreferences(loggedUser) as Preferences;
+    this.preferencesList = this.storageService.getPreferences() as Preferences[];
+    console.log('Configuraciones cargadas:', this.preferencesList);
+    this.preferences = this.preferencesList.find(preference => preference.username === loggedUser) || this.storageService.defaultPreferences;
     console.log("Configuración de", loggedUser, "cargada:", this.preferences);
     
   }
   
   changeCardBack() {
     this.saveConfig();
-    console.log("Cambiando carta trasera a", this.preferences.cardBack);
+    console.log("Cambiando carta trasera a", this.preferences!.cardBack);
   }
   
   changeVolume() {
     this.saveConfig();
-    console.log("Cambiando volumen a", this.preferences.volume);
+    console.log("Cambiando volumen a", this.preferences!.volume);
   }
   
   changeTheme() {
     this.saveConfig();
-    console.log("Cambiando modo oscuro a", this.preferences.darkMode);
+    console.log("Cambiando modo oscuro a", this.preferences!.darkMode);
   }
   
   saveConfig() {
     let loggedUser = this.userService.getUsername();
-    this.preferences.username = loggedUser;
-    this.storageService.setPreferences(this.preferences);
+    this.preferences!.username = loggedUser;
+    this.storageService.setPreferences(this.preferences!);
     console.log("Configuración de", loggedUser, "guardada:", this.preferences);
     
+  }
+  
+  resetConfig() {
+    this.storageService.removePreferences(this.userService.getUsername());
   }
 }

@@ -134,7 +134,6 @@ export class BlackjackGameComponent implements OnInit {
     console.log("Dealer Total: " + dealerTotal);
 
     if (playerTotal >= 21 || dealerTotal >= 21) {
-      alert("Blackjack");
       this.stand();
     } 
     

@@ -41,7 +41,7 @@ export class GameService {
         name: '',
         suit: suit,
         color: color,
-        isHidden: true,
+        isHidden: false,
         selected: false
       };
 

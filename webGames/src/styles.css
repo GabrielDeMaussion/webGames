@@ -38,11 +38,6 @@
     transform: rotate(180deg);
 }
 
-.card-img{
-    width: 100%;
-    height: 18rem;
-    object-fit:cover;
-}
 
 .card-blue{
     color: #0d6efd;

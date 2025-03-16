@@ -1,6 +1,10 @@
 <div class="container border border-left p-4">
     <div class="row">
-        <h3>Configuración</h3>
+        <div class="d-flex justify-content-between p-2">
+            <h3>Configuración</h3>
+            <button type="button" class="btn btn-outline-danger" (click)="resetConfig()">Reiniciar</button>
+        </div>
+
         <hr>
 
         <!-- Card back image -->
@@ -9,24 +13,24 @@
             @for (back of cardBacks; let i = $index; track $index) {
             <div class="form-check col py-2">
                 <input class="form-check-input d-none" type="radio" name="cartas" [id]="'carta' + i"
-                    [(ngModel)]="preferences.cardBack" [value]="back" (change)="changeCardBack()">
+                    [(ngModel)]="preferences!.cardBack" [value]="back" (change)="changeCardBack()">
                 <label [for]="'carta' + i" class="carta-label">
                     <img [src]="'images/back'+ back" alt="reverso" role="button" class="rounded p-1 card-medium"
-                        [ngClass]="{ 'border border-primary border-3': preferences.cardBack === back }">
+                        [ngClass]="{ 'border border-primary border-3': preferences!.cardBack === back }">
                 </label>
             </div>
             }
         </div>
-
+        
         <hr>
 
         <!-- Audio volume -->
         <div class="row justify-content-between">
             <h4>2. Volumen de sonidos</h4>
             <div class="col-4">
-                <label for="volumeRange" class="form-label">Volumen: {{preferences.volume * 10}}</label>
+                <label for="volumeRange" class="form-label">Volumen: {{preferences!.volume * 10}}</label>
                 <input type="range" id="volumeRange" class="form-range" min="0" max="1" step="0.1"
-                    [(ngModel)]="preferences.volume" (change)="changeVolume()">
+                    [(ngModel)]="preferences!.volume" (change)="changeVolume()">
             </div>
         </div>
 
@@ -37,12 +41,12 @@
             <h4>2. Tema de la pagina</h4>
             <div class="col-4">
                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" [value]="true"
-                        (change)="changeTheme()" [(ngModel)]="preferences.darkMode">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off"
+                        [value]="true" (change)="changeTheme()" [(ngModel)]="preferences!.darkMode">
                     <label class="btn btn-outline-primary" for="btnradio1">Oscuro</label>
 
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" [value]="false"
-                        (change)="changeTheme()" [(ngModel)]="preferences.darkMode">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"
+                        [value]="false" (change)="changeTheme()" [(ngModel)]="preferences!.darkMode">
                     <label class="btn btn-outline-primary" for="btnradio2">Claro</label>
                 </div>
             </div>

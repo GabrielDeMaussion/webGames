@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Preferences } from '../interfaces/models';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StorageService {
   defaultPreferences: Preferences = {
-    username: 'invitado',
+    username: 'Invitado',
     darkMode: true,
     cardBack: 'Waves.png',
     volume: 0.5
@@ -23,12 +24,12 @@ export class StorageService {
     let item = localStorage.getItem(key);
     return item ? JSON.parse(item) : null;
   }
-  
-  clearAll(){
+
+  clearAll() {
     localStorage.clear();
   }
 
-  
+
   // Preferences managment methods
   setPreferences(userPreferences: Preferences) {
     let preferences = this.getItem('preferences') as Preferences[] || [];
@@ -47,27 +48,40 @@ export class StorageService {
 
   getPreferences(username: string = ''): Preferences | Preferences[] {
     const preferencesList = (this.getItem('preferences') as Preferences[]) || [];
-  
+
     if (!username) {
       return preferencesList.length ? preferencesList : [this.defaultPreferences];
     }
-  
+
     return preferencesList.find(pref => pref.username === username) ?? this.defaultPreferences;
   }
 
   removePreferences(username: string = '') {
-    if (username) {
-      let preferences = this.getItem('preferences') as Preferences[] || [];
-      let index = preferences.findIndex(pref => pref.username === username);
 
-      if (index !== -1) {
-        preferences.splice(index, 1);
-        this.setItem('preferences', preferences);
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "¡No podrás revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, borrar!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (username) {
+          let preferences = this.getItem('preferences') as Preferences[] || [];
+          let index = preferences.findIndex(pref => pref.username === username);
+
+          if (index !== -1) {
+            preferences.splice(index, 1);
+            this.setItem('preferences', preferences);
+          }
+        }
+        else {
+          this.setItem('preferences', []);
+        }
       }
-    }
-    else{
-      this.setItem('preferences', []);
-    }
+    });
   }
 
 
