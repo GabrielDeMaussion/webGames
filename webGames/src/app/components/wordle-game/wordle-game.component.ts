@@ -14,9 +14,9 @@ import { FormsModule } from '@angular/forms';
 export class WordleGameComponent implements OnInit {
   //Attributes
   hiddenWord: string = '';
-  wordsGrid: string[][] = [];
-  triedWord: string = '';
-  rows: number[] = [0, 1, 2, 3, 4, 5];
+  wordGuesses: string[] = [];
+  wordsGrid: string[] = [];
+  guessedWord: string = '';
   cols: number[] = [0, 1, 2, 3, 4];
 
   constructor(
@@ -33,70 +33,76 @@ export class WordleGameComponent implements OnInit {
 
   startGame() {
     this.hiddenWord = this.gameService.generateRandomWord().toUpperCase();
-    this.wordsGrid = Array.from({ length: 6 }, () => ['']);
-    this.triedWord = '';
+    this.wordGuesses = Array(6).fill('');
+    this.wordsGrid = [...this.wordGuesses];
+    this.guessedWord = '';
 
   }
 
   //Methods
-  getLetterClass(letter: string, index: number): string {
-
-    if (this.hiddenWord[index] == letter) {
+  getLetterClass(wordIndex: number, charIndex: number): string {
+    let letter = this.wordGuesses[wordIndex][charIndex];
+    if (!letter) {
+      return '';
+    }
+    else if (this.hiddenWord[charIndex] == letter) {
       return 'letter-green';
     }
     else if (this.hiddenWord.includes(letter)) {
       return 'letter-yellow';
     }
-    else if (!this.hiddenWord.includes(letter) && letter != ' ') {
+    else {
       return 'letter-red';
     }
-
-    return '';
   }
 
 
   checkWord() {
-    let wordsList = this.getWord() as string[];
-    let word = this.triedWord.toUpperCase();
-    if (word.length != 5 || wordsList.includes(word)) {
+    let word = this.guessedWord.toUpperCase().replace(/[^A-ZÁÉÍÓÚÑ]/g, '');
+    
+    if (word.length != 5 || this.wordGuesses.includes(word)) {
       return;
     }
 
     this.pushWord(word);
-    this.triedWord = '';
 
     if (this.hiddenWord == word) {
       this.audioService.playSuccess();
-      alert('Fin del juego');
+      console.log('Ganaste');
+      
     }
 
-    else if (this.wordsGrid[this.wordsGrid.length-1].join('') != '') {
-      alert('Fin del juego');
+    else if (this.wordGuesses[this.wordGuesses.length-1] != '') {
+      console.log('Perdiste');
     }
 
   }
 
-  getWord(index: number = -1): string[] | string {
 
-    if (index == -1) {
-      let words: string[] = [];
-      this.wordsGrid.forEach(word => {
-        words.push(word.join(''));
-      });
-
-      return words
-    }
-
-    return this.wordsGrid[index].join('');
-  }
-
-
-  pushWord(word: string) {
-    let wordsList = this.getWord() as string[];
-    let index = wordsList.findIndex(w => w === '');
+  async pushWord(word: string) {
+    let index = this.wordsGrid.findIndex(w => String(w).toUpperCase() === this.guessedWord.toUpperCase());    
+    
     if (index !== -1) {
-      this.wordsGrid[index] = word.split('');
+      for (const letter of word.split('')) {
+        this.wordGuesses[index] += letter; 
+        await this.gameService.setDelay(300);
+      }
+      this.wordsGrid = [...this.wordGuesses];
+      this.guessedWord = '';
     }
+  }
+  
+  
+  showWord() {
+    this.guessedWord = this.guessedWord.toUpperCase().replace(/[^A-ZÁÉÍÓÚÑ]/g, '');
+    let index = this.wordGuesses.findIndex(w => w === '');
+    if (index !== -1) {
+      this.wordsGrid[index] = this.guessedWord;
+    }
+  }
+  
+  focusInput(){
+    document.getElementById('wordInput')?.focus();
   }
 
 

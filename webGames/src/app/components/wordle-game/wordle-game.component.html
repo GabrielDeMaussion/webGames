@@ -7,20 +7,21 @@
 
     <!-- Grilla para adivinar -->
     <div class="">
-        @for (word of rows; let wordI = $index; track $index) {
-        <div class="d-flex">
+        @for (word of wordsGrid; let wordI = $index; track $index) {
+        <div class="d-flex gap-1 mb-1">
             @for (char of cols; let charI = $index; track $index) {
-            <div class="wordle-input" [ngClass]="wordsGrid[word][char] ? getLetterClass(wordsGrid[word][char], charI) : ''">
-                {{wordsGrid[word][char] || ''}}
+            <div class="wordle-input" [ngClass]="getLetterClass(wordI, charI) || ''" (click)="focusInput()">
+                {{wordsGrid[wordI][charI] || ''}}
             </div>
             }
         </div>
         }
-
     </div>
+    
+    <!-- Boton para adivinar -->
     <div class="p-3">
-        <input type="text" class="form-control p-2" maxlength="5" placeholder="Escribe tu palabra" [(ngModel)]="triedWord"
-            (keyup.enter)="checkWord()">
+        <input type="text" id="wordInput" class="form-control p-2 opacity-0" maxlength="5" placeholder="Escribe tu palabra" [(ngModel)]="guessedWord"
+            (keyup.enter)="checkWord()" (input)="showWord()" autofocus autocomplete="off">
     </div>
 
 
