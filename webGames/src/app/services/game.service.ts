@@ -9,6 +9,38 @@ import { concat } from 'rxjs';
 export class GameService {
   suits = ['heart', 'diamond', 'club', 'spade'];
   colors = ['blue', 'indigo', 'purple', 'pink', 'red', 'orange', 'yellow', 'green', 'teal', 'cyan', 'black', 'gray'];
+  words = [
+    "aguao",
+    "barco",
+    "campo",
+    "dardo",
+    "estre",
+    "fuego",
+    "grano",
+    "hielo",
+    "islas",
+    "juego",
+    "karma",
+    "lento",
+    "mango",
+    "nubes",
+    "oruga",
+    "perro",
+    "queso",
+    "rueda",
+    "selva",
+    "tigre",
+    "uvaos",
+    "wafle",
+    "xenon",
+    "yerno",
+    "zorro",
+    "tarde",
+    "torre",
+    "silla",
+    "verde",
+    "circo"
+  ];
 
   constructor() { }
 
@@ -24,6 +56,12 @@ export class GameService {
     });
 
     return this.shuffle(deck);
+  }
+
+
+  //
+  generateRandomWord() {
+    return this.words[Math.floor(Math.random() * this.words.length)];
   }
 
 

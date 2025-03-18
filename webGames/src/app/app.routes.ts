@@ -46,6 +46,10 @@ export const routes: Routes = [
             {
                 path: 'hangman',
                 loadComponent:() => import('./components/hangman-game/hangman-game.component').then(m => m.HangmanGameComponent)
+            },
+            {
+                path: 'wordle',
+                loadComponent:() => import('./components/wordle-game/wordle-game.component').then(m => m.WordleGameComponent)
             }
         ]
         

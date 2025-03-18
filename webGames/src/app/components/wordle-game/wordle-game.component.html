@@ -1,0 +1,27 @@
+<div class="min-vh-100 p-3 d-flex flex-column justify-content-center align-items-center">
+    <!-- Titulo -->
+    <div class="d-flex flex-column align-items-center">
+        <h1 class="text-center">Wordle</h1>
+        <p class="text-center">Adivina la palabra</p>
+    </div>
+
+    <!-- Grilla para adivinar -->
+    <div class="">
+        @for (word of rows; let wordI = $index; track $index) {
+        <div class="d-flex">
+            @for (char of cols; let charI = $index; track $index) {
+            <div class="wordle-input">
+                {{triedWords[word][char] ? triedWords[word][char] : ''}}
+            </div>
+            }
+        </div>
+        }
+
+    </div>
+    <div class="p-3">
+        <input type="text" class="form-control p-2" maxlength="5" placeholder="Escribe tu palabra" [(ngModel)]="triedWord"
+            (keyup.enter)="checkWord()">
+    </div>
+
+
+</div>

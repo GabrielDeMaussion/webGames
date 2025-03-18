@@ -1,0 +1,24 @@
+.wordle-input {
+    width: 75px;
+    height: 75px;
+    font-size: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #212529;
+    background-color: #6c757d;
+    color: #e9ecef;
+    border-radius: 4px;
+}
+
+.letter-green{
+    background-color: #198754;
+}
+
+.letter-yellow{
+    background-color: #ffc107;
+}
+
+.letter-red{
+    background-color: #dc3545;
+}
