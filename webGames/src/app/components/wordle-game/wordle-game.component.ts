@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
 export class WordleGameComponent implements OnInit {
   //Attributes
   hiddenWord: string = '';
-  triedWords: string[] = [];
+  wordsGrid: string[][] = [];
   triedWord: string = '';
   rows: number[] = [0, 1, 2, 3, 4, 5];
   cols: number[] = [0, 1, 2, 3, 4];
@@ -33,7 +33,7 @@ export class WordleGameComponent implements OnInit {
 
   startGame() {
     this.hiddenWord = this.gameService.generateRandomWord().toUpperCase();
-    this.triedWords = ['patos', 'holas']
+    this.wordsGrid = Array.from({ length: 6 }, () => ['']);
     this.triedWord = '';
 
   }
@@ -56,25 +56,47 @@ export class WordleGameComponent implements OnInit {
 
 
   checkWord() {
+    let wordsList = this.getWord() as string[];
     let word = this.triedWord.toUpperCase();
-    if (word.length != 5 || this.triedWords.includes(word)) {
+    if (word.length != 5 || wordsList.includes(word)) {
       return;
     }
 
-    const index = this.triedWords.findIndex(w => w === '     ');
-    if (index !== -1) {
-      this.triedWords[index] = word;
-    }
+    this.pushWord(word);
     this.triedWord = '';
 
     if (this.hiddenWord == word) {
       this.audioService.playSuccess();
-    }
-    
-    if(this.triedWords.length == 6){
       alert('Fin del juego');
     }
-    
+
+    else if (this.wordsGrid[this.wordsGrid.length-1].join('') != '') {
+      alert('Fin del juego');
+    }
+
+  }
+
+  getWord(index: number = -1): string[] | string {
+
+    if (index == -1) {
+      let words: string[] = [];
+      this.wordsGrid.forEach(word => {
+        words.push(word.join(''));
+      });
+
+      return words
+    }
+
+    return this.wordsGrid[index].join('');
+  }
+
+
+  pushWord(word: string) {
+    let wordsList = this.getWord() as string[];
+    let index = wordsList.findIndex(w => w === '');
+    if (index !== -1) {
+      this.wordsGrid[index] = word.split('');
+    }
   }
 
 

@@ -10,8 +10,8 @@
         @for (word of rows; let wordI = $index; track $index) {
         <div class="d-flex">
             @for (char of cols; let charI = $index; track $index) {
-            <div class="wordle-input">
-                {{triedWords[word][char] ? triedWords[word][char] : ''}}
+            <div class="wordle-input" [ngClass]="wordsGrid[word][char] ? getLetterClass(wordsGrid[word][char], charI) : ''">
+                {{wordsGrid[word][char] || ''}}
             </div>
             }
         </div>
