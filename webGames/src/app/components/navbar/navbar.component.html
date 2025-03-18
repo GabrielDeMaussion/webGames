@@ -19,6 +19,7 @@
                     </li>
                 </ul>
                 <form class="d-flex">
+                    <button type="button" class="btn bi" [ngClass]="muteMusic ? 'bi-volume-mute-fill': 'bi-volume-up-fill'" (click)="toggleMusic()"></button>
                     <app-username-button></app-username-button>
                 </form>
             </div>

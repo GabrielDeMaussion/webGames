@@ -5,6 +5,7 @@ import { Preferences } from '../../interfaces/models';
 import { UserService } from '../../services/user.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AudioService } from '../../services/audio.service';
 
 @Component({
   selector: 'app-config-menu',
@@ -27,7 +28,8 @@ export class ConfigMenuComponent implements OnInit{
   constructor(
     private readonly cookiesService: CookiesService,
     private readonly userService: UserService,
-    private readonly storageService: StorageService
+    private readonly storageService: StorageService,
+    private readonly audioService: AudioService
   ) { }
   
   
@@ -45,9 +47,15 @@ export class ConfigMenuComponent implements OnInit{
     console.log("Cambiando carta trasera a", this.preferences!.cardBack);
   }
   
-  changeVolume() {
+  changeEffectVolume() {
     this.saveConfig();
-    console.log("Cambiando volumen a", this.preferences!.volume);
+    console.log("Cambiando volumen de los efectos a", this.preferences!.effectsVolume);
+  }
+  
+  changeMusicVolume() {
+    this.saveConfig();
+    this.audioService.updateMusic(this.preferences!.musicVolume);
+    console.log("Cambiando volumen de la musica a", this.preferences!.musicVolume);
   }
   
   changeTheme() {

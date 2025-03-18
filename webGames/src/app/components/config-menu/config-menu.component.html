@@ -1,5 +1,5 @@
-<div class="container border border-left p-4">
-    <div class="row">
+<div class="container border border-left p-4 min-vh-100 pt-5">
+    <div class="row py-2">
         <div class="d-flex justify-content-between p-2">
             <h3>Configuración</h3>
             <button type="button" class="btn btn-outline-danger" (click)="resetConfig()">Reiniciar</button>
@@ -21,16 +21,21 @@
             </div>
             }
         </div>
-        
+
         <hr>
 
         <!-- Audio volume -->
         <div class="row justify-content-between">
-            <h4>2. Volumen de sonidos</h4>
+            <h4>2. Volumen</h4>
             <div class="col-4">
-                <label for="volumeRange" class="form-label">Volumen: {{preferences!.volume * 10}}</label>
+                <label for="volumeRange" class="form-label">Efectos de sonido ({{preferences!.effectsVolume *
+                    10}})</label>
                 <input type="range" id="volumeRange" class="form-range" min="0" max="1" step="0.1"
-                    [(ngModel)]="preferences!.volume" (change)="changeVolume()">
+                    [(ngModel)]="preferences!.effectsVolume" (change)="changeEffectVolume()">
+
+                <label for="volumeRange" class="form-label">Musica ({{preferences!.musicVolume * 10}})</label>
+                <input type="range" id="volumeRange" class="form-range" min="0" max="1" step="0.1"
+                    [(ngModel)]="preferences!.musicVolume" (change)="changeMusicVolume()">
             </div>
         </div>
 
@@ -53,3 +58,4 @@
         </div>
 
     </div>
+</div>

@@ -10,37 +10,31 @@ export class GameService {
   suits = ['heart', 'diamond', 'club', 'spade'];
   colors = ['blue', 'indigo', 'purple', 'pink', 'red', 'orange', 'yellow', 'green', 'teal', 'cyan', 'black', 'gray'];
   words = [
-    "aguao",
-    "barco",
-    "campo",
-    "dardo",
-    "estre",
-    "fuego",
-    "grano",
-    "hielo",
-    "islas",
-    "juego",
-    "karma",
-    "lento",
-    "mango",
-    "nubes",
-    "oruga",
-    "perro",
-    "queso",
-    "rueda",
-    "selva",
-    "tigre",
-    "uvaos",
-    "wafle",
-    "xenon",
-    "yerno",
-    "zorro",
-    "tarde",
-    "torre",
-    "silla",
-    "verde",
-    "circo"
-  ];
+    "ABETO", "ABRAS", "ABRIA", "ACERA", "ACTOR", "ACUDO", "AGUDO", "AGUAS", "ALADO", "ALBAS", "ALTAR", "ALTOS", "AMADO", "AMBAR", "ANTES", "ANTON", "ANUAL", "APOYO", "APRES", "ARADO", "ARCOS", "ARENA", "ARIDO", "ARMAS", "AROMA", "ARPAS", "ASADO", "ASILO", "ASNOS", "ASTRO", "ATADO", "ATIZA", "ATIZO", "ATLAS", "AUTOR", "AVALA", "AVION", "AVISO", "AYUDA", "AZOTE", "AZUCA", "AZUL",
+    "BABAS", "BACAS", "BACHE", "BAJAS", "BAJES", "BALAS", "BARDO", "BARRO", "BEBES", "BELEN", "BERTO", "BICHO", "BIZCO", "BLUSA", "BOLAS", "BONOS", "BOTAS", "BUENO", "BURRO", "BUSCA", "BUTAN", "BUTEO", "BUTIR", "BUTIS", "BUTOS", "BUTRE",
+    "CABAL", "CABAS", "CABEN", "CABER", "CABIA", "CABRA", "CAFES", "CAJAS", "CALAR", "CALAS", "CALCA", "CALLA", "CALMA", "CALOR", "CAMBA", "CAMPO", "CANAS", "CANTOS", "CAPTO", "CARAS", "CARLO", "CARRO", "CASAS", "CATAR", "CAIDA", "CEJAS", "CELIA", "CENAS", "CEPAS", "CERCA", "CABRA", "CAFES", "CAJAS", "CALAR", "CALAS", "CALCA", "CALLA", "CALMA", "CAMBA", "CAMPO", "CANAS", "CANTOS", "CAPTO", "CARAS", "CARLO", "CARRO", "CASAS", "CATAR", "CAIDA", "CEJAS", "CELIA", "CENAS", "CEPAS", "CERCA", "CERCO", "CERDO", "CHILE", "CHINA", "CIEGO", "CINES", "CITAS", "CLARA", "CLAVO", "COLAS", "COLON", "CORAL", "CORAS", "COREA", "CORRO", "COSAS", "COSTO", "CRUDO", "CURAR",
+    "DADOS", "DAGAS", "DATOS", "DANOS", "DEJAR", "DEJES", "DENSO", "DICES", "DIVOS", "DOTES", "DUNAS", "DURES", "DUROS",
+    "ELLOS", "ECHAS", "EDITO", "ELEVO", "EMULE", "EMULO", "ENOJE", "ERROR", "ESTAS",
+    "FALLO", "FALTO", "FERIA", "FETOS", "FIJOS", "FILAS", "FILIA", "FINCA",
+    "GAFAS", "GALAS", "GALES", "GALOS", "GANAS", "GANES", "GASES", "GASTO", "GIRAS", "GORDO", "GORRO", "GRAVE", "GRITO",
+    "HACER", "HALOS", "HASTA", "HECES", "HIELO",
+    "IDEAS", "INDIA", "INFLO", "ISLAS",
+    "JAPON", "JEFAS", "JERGA", "JOSUE", "JULIO",
+    "LABIO", "LADOS", "LAGOS", "LAMER", "LANAS", "LARGO", "LASAS", "LATAS", "LAVAR", "LECHE", "LEJOS", "LEMAS", "LENTO", "LEONA", "LETRA", "LIBRO", "LINDA", "LIRIO", "LISTA", "LITRO", "LLAMA", "LLENO", "LLORO", "LUCHA", "LUGAR", "LUISA", "LUNAS", "LUZCO",
+    "MALOS", "MANIA", "MARCA", "MARCO", "MARTI", "MARIA", "MELON", "MENOS", "METER", "METRO", "MOLER", "MONTE", "MORIR",
+    "NACER", "NADAR", "NARRO", "NATAS", "NAVES", "NECIO", "NINOS", "NOTAS", "NUBES",
+    "OBRAS", "OCIOS", "OLLAS", "ONDAS", "ONZAS", "OPERA", "OTROS", "OVULO", "OIRTE",
+    "PALAS", "PARIS", "PEDIR", "PELEA", "PELOS", "PERAS", "PERRO", "PESOS", "PILAS", "PINTO", "PODER", "PLATO", "PLAZA", "POCAS", "POETA", "POLLA", "PORRO", "PULIR", "PUROS", "PAJAS", "PANZA", "PAPAS", "PARES", "PASAR", "PASOS", "PASTA",
+    "QATAR", "QUEDO", "QUEMA", "QUITO", "QUESO",
+    "RELOJ", "RUBIO", "RASCO", "RATAS", "RATOS", "REDES", "REMAR", "RENOS", "RENTA",
+    "SALAS", "SALTO", "SANTO", "SAPOS", "SARTA", "SAVIA", "SECAR", "SEDAL", "SENAL", "SERES", "SILLA", "SIRIO", "SITIO", "SOBRE", "SUAVE", "SUENO", "SUFRO",
+    "TABLA", "TACOS", "TALAR", "TALLA", "TALLO", "TAPAS", "TECHO", "TEJAS", "TENIS", "TERCO", "TEXTO", "TIGRE", "TOCAR", "TOMAR", "TORRE", "TRAJE", "TRIPA", "TROPA", "TULIO", "TURNO",
+    "UBICO", "UFANO", "UJIER", "ULTRA", "UNIDO", "UNTAR", "URDIR", "URGIR", "USADO", "USTED", "UTILO",
+    "VACAS", "VAGOS", "VALER", "VALOR", "VECES", "VEDAS", "VELAS", "VEMOS", "VENAS", "VENIR", "VERDE", "VIERA", "VIGAS", "VINOS", "VIVIR", "VOLAR", "VOTAR",
+    "YATES", "YEMAS", "YEMEN", "YENDO", "YENES", "YESCA", "YOGUR", "YUGOS",
+    "ZAFOS", "ZAGAL", "ZANJA", "ZARCO", "ZARPA", "ZONAS", "ZORRO", "ZURDO", "ZURRA"
+  ]
+
 
   constructor() { }
 

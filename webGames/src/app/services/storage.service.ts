@@ -10,7 +10,8 @@ export class StorageService {
     username: 'Invitado',
     darkMode: true,
     cardBack: 'Waves.png',
-    volume: 0.5
+    effectsVolume: 0.5,
+    musicVolume: 0.5
   }
 
   constructor() { }

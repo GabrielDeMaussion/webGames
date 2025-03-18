@@ -17,13 +17,16 @@ export class WordleGameComponent implements OnInit {
   wordGuesses: string[] = [];
   wordsGrid: string[] = [];
   guessedWord: string = '';
+  lost: boolean = false;
   cols: number[] = [0, 1, 2, 3, 4];
 
+  
   constructor(
     private readonly gameService: GameService,
     private readonly audioService: AudioService
   ) { }
 
+  
   ngOnInit(): void {
     this.startGame();
     console.log('Palabra oculta:', this.hiddenWord);
@@ -32,13 +35,15 @@ export class WordleGameComponent implements OnInit {
 
 
   startGame() {
+    this.lost = false;
     this.hiddenWord = this.gameService.generateRandomWord().toUpperCase();
     this.wordGuesses = Array(6).fill('');
     this.wordsGrid = [...this.wordGuesses];
     this.guessedWord = '';
-
+    
   }
 
+  
   //Methods
   getLetterClass(wordIndex: number, charIndex: number): string {
     let letter = this.wordGuesses[wordIndex][charIndex];
@@ -60,7 +65,14 @@ export class WordleGameComponent implements OnInit {
   checkWord() {
     let word = this.guessedWord.toUpperCase().replace(/[^A-ZÁÉÍÓÚÑ]/g, '');
     
-    if (word.length != 5 || this.wordGuesses.includes(word)) {
+    
+    if (this.lost || word.length != 5 || this.wordGuesses.includes(word)) {
+      return;
+    }
+    
+    if (!this.gameService.words.includes(word.toLowerCase())) {
+      this.guessedWord = '';
+      this.showWord();
       return;
     }
 
@@ -69,11 +81,11 @@ export class WordleGameComponent implements OnInit {
     if (this.hiddenWord == word) {
       this.audioService.playSuccess();
       console.log('Ganaste');
-      
     }
 
     else if (this.wordGuesses[this.wordGuesses.length-1] != '') {
       console.log('Perdiste');
+      this.lost = true;
     }
 
   }
@@ -93,13 +105,14 @@ export class WordleGameComponent implements OnInit {
   }
   
   
-  showWord() {
+  showWord() {    
     this.guessedWord = this.guessedWord.toUpperCase().replace(/[^A-ZÁÉÍÓÚÑ]/g, '');
     let index = this.wordGuesses.findIndex(w => w === '');
     if (index !== -1) {
       this.wordsGrid[index] = this.guessedWord;
     }
   }
+  
   
   focusInput(){
     document.getElementById('wordInput')?.focus();
