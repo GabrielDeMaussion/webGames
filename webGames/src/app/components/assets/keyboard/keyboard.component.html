@@ -1,0 +1,25 @@
+<div class="d-flex">
+    <div class="p-4 border border-3 rounded animated" [ngClass]="{'border-light border-opacity-50': isFocused()}"
+        (click)="focusInput()">
+
+        <input type="text" id="wordInput" class="w-100 opacity-0 p-0" style="height: 0px;" (keyup)="pressKey()"
+            [(ngModel)]="word" (keyup.enter)="enterKey()" maxlength="5" autofocus autocomplete="off">
+
+        @for (row of letters; track $index) {
+        <div class="row gap-3 mb-2 justify-content-center">
+            @for (letter of row; track $index) {
+            <button type="button" class="btn fs-4 d-block" [ngClass]="getKeyClass(letter)"
+                style="width: 3rem; height: 3rem;" (click)="pressKey(letter)">{{letter}}</button>
+            }
+            @if(hasEnter && row === letters[letters.length - 1]) {
+            <button type="button" class="btn btn-outline-secondary bi-backspace fs-4" style="width: 3rem; height: 3rem;"
+                (click)="deleteKey()">
+            </button>
+            <button type="button" class="btn btn-outline-secondary bi-arrow-return-left fs-4"
+                style="width: 6rem; height: 3rem;" (click)="enterKey()">
+            </button>
+            }
+        </div>
+        }
+    </div>
+</div>

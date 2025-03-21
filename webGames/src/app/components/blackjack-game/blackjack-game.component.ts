@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CardComponent, CommonModule],
   templateUrl: './blackjack-game.component.html',
-  styleUrl: './blackjack-game.component.css'
+  styleUrl: './blackjack-game.component.scss'
 })
 export class BlackjackGameComponent implements OnInit {
   username: string = "";

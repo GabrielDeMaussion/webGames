@@ -8,7 +8,7 @@ import { UserService } from '../../../services/user.service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './username-button.component.html',
-  styleUrl: './username-button.component.css'
+  styleUrl: './username-button.component.scss'
 })
 export class UsernameButtonComponent {
   changeUsername: boolean = false;

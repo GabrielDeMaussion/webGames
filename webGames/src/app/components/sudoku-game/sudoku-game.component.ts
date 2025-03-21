@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './sudoku-game.component.html',
-  styleUrl: './sudoku-game.component.css'
+  styleUrl: './sudoku-game.component.scss'
 })
 export class SudokuGameComponent {
 

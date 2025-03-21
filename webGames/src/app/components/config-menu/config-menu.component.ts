@@ -12,7 +12,7 @@ import { AudioService } from '../../services/audio.service';
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './config-menu.component.html',
-  styleUrl: './config-menu.component.css'
+  styleUrl: './config-menu.component.scss'
 })
 export class ConfigMenuComponent implements OnInit{
   preferencesList: Preferences[] = [];

@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './solitary-game.component.html',
-  styleUrl: './solitary-game.component.css'
+  styleUrl: './solitary-game.component.scss'
 })
 export class SolitaryGameComponent {
 

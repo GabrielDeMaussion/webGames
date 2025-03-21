@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './chess-game.component.html',
-  styleUrl: './chess-game.component.css'
+  styleUrl: './chess-game.component.scss'
 })
 export class ChessGameComponent {
 

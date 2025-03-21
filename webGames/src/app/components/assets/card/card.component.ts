@@ -9,7 +9,7 @@ import { UserService } from '../../../services/user.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './card.component.html',
-  styleUrl: './card.component.css'
+  styleUrl: './card.component.scss'
 })
 export class CardComponent {
   //Inputs

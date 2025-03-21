@@ -6,7 +6,7 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [RouterLink],
   templateUrl: './games-menu.component.html',
-  styleUrl: './games-menu.component.css'
+  styleUrl: './games-menu.component.scss'
 })
 export class GamesMenuComponent {
   

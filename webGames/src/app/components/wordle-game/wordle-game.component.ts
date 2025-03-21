@@ -3,13 +3,14 @@ import { GameService } from '../../services/game.service';
 import { AudioService } from '../../services/audio.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { KeyboardComponent } from "../assets/keyboard/keyboard.component";
 
 @Component({
   selector: 'app-wordle-game',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, KeyboardComponent],
   templateUrl: './wordle-game.component.html',
-  styleUrl: './wordle-game.component.css'
+  styleUrl: './wordle-game.component.scss'
 })
 export class WordleGameComponent implements OnInit {
   //Attributes
@@ -29,20 +30,19 @@ export class WordleGameComponent implements OnInit {
   
   ngOnInit(): void {
     this.startGame();
-    console.log('Palabra oculta:', this.hiddenWord);
-
   }
 
 
-  startGame() {
+  async startGame() {
     this.lost = false;
     this.hiddenWord = this.gameService.generateRandomWord().toUpperCase();
+    console.log('Palabra secreta:', this.hiddenWord);
+    
     this.wordGuesses = Array(6).fill('');
     this.wordsGrid = [...this.wordGuesses];
     this.guessedWord = '';
     
   }
-
   
   //Methods
   getLetterClass(wordIndex: number, charIndex: number): string {
@@ -113,10 +113,13 @@ export class WordleGameComponent implements OnInit {
     }
   }
   
-  
+  updateWord(updatedWord : string){
+    this.guessedWord = updatedWord.slice(0, 5);
+    this.showWord();
+  }
+
   focusInput(){
     document.getElementById('wordInput')?.focus();
   }
-
 
 }
