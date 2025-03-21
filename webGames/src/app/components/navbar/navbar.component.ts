@@ -12,19 +12,16 @@ import { CommonModule } from '@angular/common';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent implements OnInit{
-  muteMusic: boolean = false;
+  muteMusic: boolean = true;
 
   constructor(
     private readonly audioService: AudioService
   ) { }
   
   ngOnInit(): void {
-    this.playBackgroundMusic();
+    
   }
 
-  playBackgroundMusic() {
-    this.audioService.playMusic("backgroundMusic1.mp3");
-  }
 
   toggleMusic() {
     this.audioService.toggleMusic();

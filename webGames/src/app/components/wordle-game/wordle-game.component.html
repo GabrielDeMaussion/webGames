@@ -20,7 +20,7 @@
 
     <!-- Boton para adivinar -->
     <div class="text-center">
-        <input type="text" id="wordInput" class="opacity-0" maxlength="5" [(ngModel)]="guessedWord"
+        <input type="text" id="wordInput" class="" maxlength="5" [(ngModel)]="guessedWord"
             (keyup.enter)="checkWord()" (ngModelChange)="showWord()" autofocus autocomplete="off">
         <p [ngClass]="lost ? '':'opacity-0'">PALABRA OCULTA: {{hiddenWord}}</p>
         <button type="button" class="btn btn-dark bi-arrow-clockwise py-3 px-4" (click)="startGame()"></button>

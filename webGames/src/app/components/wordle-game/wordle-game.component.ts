@@ -70,11 +70,11 @@ export class WordleGameComponent implements OnInit {
       return;
     }
     
-    if (!this.gameService.words.includes(word.toLowerCase())) {
-      this.guessedWord = '';
-      this.showWord();
-      return;
-    }
+    // if (!this.gameService.words.includes(word)) {
+    //   this.guessedWord = '';
+    //   this.showWord();
+    //   return;
+    // }
 
     this.pushWord(word);
 

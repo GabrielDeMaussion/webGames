@@ -13,8 +13,8 @@
             </div>
             
             <!-- mazo del juego -->
-            <div>
-                <img [src]="'images/deck'+userPreferences?.cardBack" alt="deck" class="p-0 mx-4" (click)="startGame()"
+            <div (click)="startGame()" role="button">
+                <img [src]="'images/deck'+userPreferences?.cardBack" alt="deck" class="p-0 mx-4"
                     style="width: 224px; height: 326px;">
                 <p class="d-flex justify-content-center fs-5 text-secondary" [ngClass]="{'opacity-0': inGame}">Haz clic
                     para {{playerHand.length > 0 ? 'reiniciar' : 'empezar'}}.
