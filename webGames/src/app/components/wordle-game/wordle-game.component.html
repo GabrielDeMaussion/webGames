@@ -20,7 +20,7 @@
 
     <!-- Boton para adivinar -->
     <div class="text-center">
-        <p [ngClass]="lost ? '':'opacity-0'">PALABRA OCULTA: {{hiddenWord}}</p>
+        <p [ngClass]="gameLost ? '':'opacity-0'">PALABRA OCULTA: {{hiddenWord}}</p>
         <button type="button" class="btn btn-dark bi-arrow-clockwise py-3 px-4" (click)="startGame()"></button>
     </div>
 

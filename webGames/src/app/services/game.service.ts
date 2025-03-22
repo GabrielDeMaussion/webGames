@@ -9,7 +9,7 @@ import { concat } from 'rxjs';
 export class GameService {
   suits = ['heart', 'diamond', 'club', 'spade'];
   colors = ['blue', 'indigo', 'purple', 'pink', 'red', 'orange', 'yellow', 'green', 'teal', 'cyan', 'black', 'gray'];
-  words = [
+  wordleWords = [
     "ABETO", "ABRAS", "ABRIA", "ACERA", "ACTOR", "ACUDO", "AGUDO", "AGUAS", "ALADO", "ALBAS", "ALTAR", "ALTOS", "AMADO", "AMBAR", "ANTES", "ANTON", "ANUAL", "APOYO", "APRES", "ARADO", "ARCOS", "ARENA", "ARIDO", "ARMAS", "AROMA", "ARPAS", "ASADO", "ASILO", "ASNOS", "ASTRO", "ATADO", "ATIZA", "ATIZO", "ATLAS", "AUTOR", "AVALA", "AVION", "AVISO", "AYUDA", "AZOTE", "AZUCA", "AZUL",
     "BABAS", "BACAS", "BACHE", "BAJAS", "BAJES", "BALAS", "BARDO", "BARRO", "BEBES", "BELEN", "BERTO", "BICHO", "BIZCO", "BLUSA", "BOLAS", "BONOS", "BOTAS", "BUENO", "BURRO", "BUSCA", "BUTAN", "BUTEO", "BUTIR", "BUTIS", "BUTOS", "BUTRE",
     "CABAL", "CABAS", "CABEN", "CABER", "CABIA", "CABRA", "CAFES", "CAJAS", "CALAR", "CALAS", "CALCA", "CALLA", "CALMA", "CALOR", "CAMBA", "CAMPO", "CANAS", "CANTOS", "CAPTO", "CARAS", "CARLO", "CARRO", "CASAS", "CATAR", "CAIDA", "CEJAS", "CELIA", "CENAS", "CEPAS", "CERCA", "CABRA", "CAFES", "CAJAS", "CALAR", "CALAS", "CALCA", "CALLA", "CALMA", "CAMBA", "CAMPO", "CANAS", "CANTOS", "CAPTO", "CARAS", "CARLO", "CARRO", "CASAS", "CATAR", "CAIDA", "CEJAS", "CELIA", "CENAS", "CEPAS", "CERCA", "CERCO", "CERDO", "CHILE", "CHINA", "CIEGO", "CINES", "CITAS", "CLARA", "CLAVO", "COLAS", "COLON", "CORAL", "CORAS", "COREA", "CORRO", "COSAS", "COSTO", "CRUDO", "CURAR",
@@ -34,7 +34,18 @@ export class GameService {
     "YATES", "YEMAS", "YEMEN", "YENDO", "YENES", "YESCA", "YOGUR", "YUGOS",
     "ZAFOS", "ZAGAL", "ZANJA", "ZARCO", "ZARPA", "ZONAS", "ZORRO", "ZURDO", "ZURRA"
   ]
-
+  hangmanWords = [
+    'MANZANA', 'ELEFANTE', 'COMPUTADORA', 'GUITARRA', 'MARIPOSA',
+    'VENTANA', 'JIRAFA', 'MURCIELAGO', 'ASTRONAUTA', 'RELAMPAGO',
+    'ESPEJO', 'BICICLETA', 'CANGREJO', 'ZAPATO', 'BOSQUE',
+    'CABALLO', 'PANTALLA', 'CAMISETA', 'PISTACHO', 'TELEFONO',
+    'FUTBOL', 'AVION', 'PLANETA', 'ANTENA', 'RINCON',
+    'SILLA', 'TIBURON', 'PELICULA', 'BARCO', 'CEREZA',
+    'NARANJA', 'LUCIERNAGA', 'TORNILLO', 'CANGURO', 'RATON',
+    'CAMION', 'MONTAÑA', 'VENTILADOR', 'PINTURA', 'DRAGON',
+    'ALFOMBRA', 'MARATON', 'UNIVERSO', 'CIRUJANO', 'DIAMANTE',
+    'SERPIENTE', 'LAGARTIJA', 'CHIMENEA', 'ESCALERA'
+  ];
 
   constructor() { }
 
@@ -54,10 +65,13 @@ export class GameService {
 
 
   //
-  generateRandomWord() {
-    return this.words[Math.floor(Math.random() * this.words.length)];
+  generateRandomWordleWord() {
+    return this.wordleWords[Math.floor(Math.random() * this.wordleWords.length)];
   }
 
+  generateRandomHangmanWord() {
+    return this.hangmanWords[Math.floor(Math.random() * this.hangmanWords.length)];
+  }
 
   //
   generateMemoryDeck(quantity: number = 20) {

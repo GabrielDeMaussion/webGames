@@ -21,9 +21,13 @@ export class KeyboardComponent {
 
   pressKey(key: string = "") {
     if(key) {
-      this.word += key.toUpperCase();
+      this.word = (this.hasEnter ? this.word += key.toUpperCase() : this.word = key.toUpperCase());
     }
     this.wordChange.emit(this.word.toUpperCase());
+
+    if(!this.hasEnter){
+      this.word = '';
+    }
   }
 
   enterKey() {

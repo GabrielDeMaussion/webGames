@@ -18,7 +18,7 @@ export class WordleGameComponent implements OnInit {
   wordGuesses: string[] = [];
   wordsGrid: string[] = [];
   guessedWord: string = '';
-  lost: boolean = false;
+  gameLost: boolean = false;
   cols: number[] = [0, 1, 2, 3, 4];
 
   
@@ -34,8 +34,8 @@ export class WordleGameComponent implements OnInit {
 
 
   async startGame() {
-    this.lost = false;
-    this.hiddenWord = this.gameService.generateRandomWord().toUpperCase();
+    this.gameLost = false;
+    this.hiddenWord = this.gameService.generateRandomWordleWord().toUpperCase();
     console.log('Palabra secreta:', this.hiddenWord);
     
     this.wordGuesses = Array(6).fill('');
@@ -66,11 +66,11 @@ export class WordleGameComponent implements OnInit {
     let word = this.guessedWord.toUpperCase().replace(/[^A-ZÁÉÍÓÚÑ]/g, '');
     
     
-    if (this.lost || word.length != 5 || this.wordGuesses.includes(word)) {
+    if (this.gameLost || word.length != 5 || this.wordGuesses.includes(word)) {
       return;
     }
     
-    // if (!this.gameService.words.includes(word)) {
+    // if (!this.gameService.wordleWords.includes(word)) {
     //   this.guessedWord = '';
     //   this.showWord();
     //   return;
@@ -85,7 +85,7 @@ export class WordleGameComponent implements OnInit {
 
     else if (this.wordGuesses[this.wordGuesses.length-1] != '') {
       console.log('Perdiste');
-      this.lost = true;
+      this.gameLost = true;
     }
 
   }
