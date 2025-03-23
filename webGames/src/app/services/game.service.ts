@@ -119,6 +119,15 @@ export class GameService {
     return cards;
   }
 
+  generateDices(quatity: number = 5) {
+    let dices = [];
+    for (let index = 0; index < quatity; index++) {
+      dices.push({ value: 0, selected: false });
+    }
+    
+    return dices;
+  }
+
 
   //
   shuffle(list: any[]) {

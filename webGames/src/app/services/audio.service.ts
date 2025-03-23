@@ -23,6 +23,12 @@ export class AudioService {
     "dealCard2.mp3",
   ]
 
+  diceRollAudios: string[] = [
+    "rollDice1.mp3",
+    "rollDice2.mp3",
+    "rollDice3.mp3",
+  ]
+
   backgroundMusics: string[] = [
     "backgroundMusic1.mp3",
     "backgroundMusic2.mp3",
@@ -98,6 +104,11 @@ export class AudioService {
 
   playSuccess() {
     this.playAudio("success.mp3");
+  }
+
+  playDiceRollRandom(){
+    let randomIndex = Math.floor(Math.random() * this.diceRollAudios.length);
+    this.playAudio(this.diceRollAudios[randomIndex]);
   }
 
 }

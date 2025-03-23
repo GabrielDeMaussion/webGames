@@ -14,3 +14,22 @@ export interface Preferences{
     effectsVolume: number;
     musicVolume: number;
 }
+
+export interface GeneralaScore{
+    ones: number;
+    twos: number;
+    threes: number;
+    fours: number;
+    fives: number;
+    sixes: number;
+    double: number;
+    full: number;
+    poker: number;
+    generala: number;
+    doubleGenerala: number;
+}
+
+export interface Dice{
+    value: number;
+    selected: boolean;
+}

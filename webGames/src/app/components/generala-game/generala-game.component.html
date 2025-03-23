@@ -1,0 +1,75 @@
+<section class="min-vh-100 p-5">
+    <div class="row p-4">
+        <div class="col-9 border">
+            <div class="d-flex justify-content-center p-5 gap-3">
+                @for (dice of dices; let i = $index; track $index) {
+                    <div class="" (click)="selectDice(i)">
+                        <app-dice [id]="i" [value]="dice.value" [selected]="dice.selected" (valueChange)="$event"/>
+                    </div>
+                }
+            </div>
+            <button type="button" (click)="reRoll()">Re-roll</button>
+        </div>
+        
+        <div class="col-3 border">
+            <table class="table table-striped-columns">
+                <thead>
+                    <tr>
+                        <th scope="col">Categorias</th>
+                        <th scope="col">Puntuación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Doble</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Escalera</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Full</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Póker</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Generala</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Generala x2</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
