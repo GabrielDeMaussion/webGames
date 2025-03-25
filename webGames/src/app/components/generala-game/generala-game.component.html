@@ -1,75 +1,98 @@
-<section class="min-vh-100 p-5">
+<section class="min-vh-100 p-5 d-flex flex-column">
+    <!-- Game Title -->
     <div class="row p-4">
-        <div class="col-9 border">
-            <div class="d-flex justify-content-center p-5 gap-3">
+        <h1 class="text-center">Generala</h1>
+        <div class="d-flex justify-content-between">
+            <h4> Tiradas restantes: {{maxRolls - rolls}} </h4>
+        </div>
+    </div>
+
+    <!-- Game board -->
+    <div class="row justify-content-center align-items-center border rounded">
+
+        <!-- dices -->
+        <div class="col-9 p-2 d-flex flex-column justify-content-between align-items-center" style="min-height: 450px;">
+            <div class="d-flex justify-content-center align-items-center p-5 gap-3">
                 @for (dice of dices; let i = $index; track $index) {
-                    <div class="" (click)="selectDice(i)">
-                        <app-dice [id]="i" [value]="dice.value" [selected]="dice.selected" (valueChange)="$event"/>
-                    </div>
+                <div class="" (click)="selectDice(i)">
+                    <app-dice [id]="i" [(value)]="dice.value" [(selected)]="dice.selected" />
+                </div>
                 }
             </div>
-            <button type="button" (click)="reRoll()">Re-roll</button>
+            <button type="button" class="btn btn-success p-3 w-100" (click)="reRoll()" [disabled]="rolls >= maxRolls">
+                {{(firstRoll ? 'Tirar dados' : 'Re-Roll')}}
+            </button>
         </div>
-        
-        <div class="col-3 border">
+
+        <!-- scores -->
+        <div class="col-3 border-start align-self-start p-0">
             <table class="table table-striped-columns">
                 <thead>
                     <tr>
                         <th scope="col">Categorias</th>
-                        <th scope="col">Puntuación</th>
+                        <th scope="col" class="text-center">Puntuación</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>1</td>
-                        <td></td>
+                        <button class="w-100 border-0 border-bottom" (click)="setScore('ones')"
+                        [ngClass]="getScoreClass('ones')">{{scores?.ones != null ? scores?.ones : '-'}}</button>
                     </tr>
                     <tr>
                         <td>2</td>
-                        <td></td>
+                        <button class="w-100 border-0 border-bottom" (click)="setScore('twos')"
+                        [ngClass]="getScoreClass('twos')">{{scores?.twos != null ? scores?.twos : '-'}}</button>
                     </tr>
                     <tr>
                         <td>3</td>
-                        <td></td>
+                        <button class="w-100 border-0 border-bottom" (click)="setScore('threes')"
+                        [ngClass]="getScoreClass('threes')">{{scores?.threes != null ? scores?.threes : '-'}}</button>
                     </tr>
                     <tr>
                         <td>4</td>
-                        <td></td>
+                        <button class="w-100 border-0 border-bottom" (click)="setScore('fours')"
+                        [ngClass]="getScoreClass('fours')">{{scores?.fours != null ? scores?.fours : '-'}}</button>
                     </tr>
                     <tr>
                         <td>5</td>
-                        <td></td>
+                        <button class="w-100 border-0 border-bottom" (click)="setScore('fives')"
+                        [ngClass]="getScoreClass('fives')">{{scores?.fives != null ? scores?.fives : '-'}}</button>
                     </tr>
                     <tr>
                         <td>6</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Doble</td>
-                        <td></td>
+                        <button class="w-100 border-0 border-bottom" (click)="setScore('sixes')"
+                        [ngClass]="getScoreClass('sixes')">{{scores?.sixes != null ? scores?.sixes : '-'}}</button>
                     </tr>
                     <tr>
                         <td>Escalera</td>
-                        <td></td>
+                        <button class="w-100 border-0 border-bottom" (click)="setScore('flush')"
+                        [ngClass]="getScoreClass('flush')">{{scores?.flush != null ? scores?.flush : '-'}}</button>
                     </tr>
                     <tr>
                         <td>Full</td>
-                        <td></td>
+                        <button class="w-100 border-0 border-bottom" (click)="setScore('full')"
+                        [ngClass]="getScoreClass('full')">{{scores?.full != null ? scores?.full : '-'}}</button>
                     </tr>
                     <tr>
                         <td>Póker</td>
-                        <td></td>
+                        <button class="w-100 border-0 border-bottom" (click)="setScore('poker')"
+                        [ngClass]="getScoreClass('poker')">{{scores?.poker != null ? scores?.poker : '-'}}</button>
                     </tr>
                     <tr>
                         <td>Generala</td>
-                        <td></td>
+                        <button class="w-100 border-0 border-bottom" (click)="setScore('generala')"
+                        [ngClass]="getScoreClass('generala')">{{scores?.generala != null ? scores?.generala : '-'}}</button>
                     </tr>
                     <tr>
                         <td>Generala x2</td>
-                        <td></td>
+                        <button class="w-100 border-0 border-bottom" (click)="setScore('doubleGenerala')"
+                        [ngClass]="getScoreClass('doubleGenerala')">{{scores?.doubleGenerala != null ? scores?.doubleGenerala : '-'}}</button>
                     </tr>
                 </tbody>
             </table>
+            <h3>Total: {{calculateTotal()}}</h3>
         </div>
+        
     </div>
 </section>

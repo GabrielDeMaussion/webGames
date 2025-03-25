@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, input, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -17,5 +17,9 @@ export class DiceComponent {
 
   rollDice() {
     this.value = Math.floor(Math.random() * 6) + 1;
+    this.selected = false;
+    
+    this.valueChange.emit(this.value);
+    this.selectedChange.emit(this.selected);
   }
 }

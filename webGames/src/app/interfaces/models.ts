@@ -16,17 +16,17 @@ export interface Preferences{
 }
 
 export interface GeneralaScore{
-    ones: number;
-    twos: number;
-    threes: number;
-    fours: number;
-    fives: number;
-    sixes: number;
-    double: number;
-    full: number;
-    poker: number;
-    generala: number;
-    doubleGenerala: number;
+    ones: number | null;
+    twos: number | null;
+    threes: number | null;
+    fours: number | null;
+    fives: number | null;
+    sixes: number | null;
+    flush: number | null;
+    full: number | null;
+    poker: number | null;
+    generala: number | null;
+    doubleGenerala: number | null;
 }
 
 export interface Dice{
