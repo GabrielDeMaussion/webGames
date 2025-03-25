@@ -188,11 +188,15 @@ export class GeneralaGameComponent implements OnInit {
   }
   
   getScoreClass(scoreKey: keyof GeneralaScore){
+ 
     if(this.scores![scoreKey] === null){
       return 'fw-bold text-danger';
     }
     
-    console.log('Llamando a getScore de:', scoreKey);
+    else if(this.scores![scoreKey] !== 0){
+      return 'fw-bold text-success';
+    }
+    
     return this.getScore(scoreKey) === 0 ? '' : 'fw-bold text-warning';
   }
 }
