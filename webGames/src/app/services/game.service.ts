@@ -46,7 +46,7 @@ export class GameService {
     'ALFOMBRA', 'MARATON', 'UNIVERSO', 'CIRUJANO', 'DIAMANTE',
     'SERPIENTE', 'LAGARTIJA', 'CHIMENEA', 'ESCALERA'
   ];
-  mineSweeperGrid : MineSweeperBlock[][] = [];
+  mineSweeperGrid: MineSweeperBlock[][] = [];
 
   constructor() { }
 
@@ -127,7 +127,7 @@ export class GameService {
     for (let index = 0; index < quatity; index++) {
       dices.push({ value: 0, selected: false });
     }
-    
+
     return dices;
   }
 
@@ -183,7 +183,34 @@ export class GameService {
       title: title,
       text: text,
       icon: icon,
-      confirmButtonText: 'Ok'
+      confirmButtonText: 'Ok',
+      scrollbarPadding: false,
+    });
+  }
+
+
+  //
+  requestDifficulty(options: string[]): Promise<number> {
+    return new Promise((resolve) => {
+      Swal.fire({
+        title: "Elige una opción",
+        showConfirmButton: false,
+        scrollbarPadding: false,
+        allowOutsideClick: false,
+        html: options.map((option, index) => 
+          `<button class="swal2-confirm swal2-styled opcion-btn" data-index="${index}">${option}</button>`
+        ).join(''),
+        didOpen: () => {
+          const botones = document.querySelectorAll<HTMLButtonElement>(".opcion-btn");
+          botones.forEach(btn => {
+            btn.addEventListener("click", () => {
+              const index = Number(btn.getAttribute("data-index"));
+              Swal.close();
+              resolve(index);
+            });
+          });
+        }
+      });
     });
   }
 
