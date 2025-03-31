@@ -116,7 +116,7 @@ export class TictactoeoeGameComponent implements OnInit {
     if (this.tictactoeGrid.flat().every(cell => cell !== '')) {
       this.gameService.sendAlert('Empate', 'No hay más movimientos posibles.', 'warning');
       this.inGame = false;
-      return true;
+      return false;
     }
 
     return false;

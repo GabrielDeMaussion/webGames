@@ -12,13 +12,14 @@ import { AudioService } from '../../services/audio.service';
   styleUrl: './memory-game.component.scss'
 })
 export class MemoryGameComponent implements OnInit {
-  remainingLives: number = 7;
+  remainingLives: number = 0;
   memoryDeck: Card[] = [];
   selectedCards: Card[] = [];
   checkingMatch: boolean = false;
   dificulty: any = {
     deckSize: 24,
-    lives: 12,
+    lives: 0,
+    viewDelay: 2000,
     cardSize: 'small'
   }
 
@@ -34,12 +35,12 @@ export class MemoryGameComponent implements OnInit {
 
   async startGame() {
     this.memoryDeck = [];
-    this.selectDifficulty();
+    this.dificulty = await this.selectDifficulty();
     this.memoryDeck = this.gameService.generateMemoryDeck(this.dificulty.deckSize);
     this.remainingLives = this.dificulty.lives;
     this.selectedCards = [];
     
-    await this.hiddeCards();
+    await this.hiddeCards(this.dificulty.viewDelay);
   }
 
 
@@ -89,13 +90,29 @@ export class MemoryGameComponent implements OnInit {
     }
   }
   
-  async hiddeCards() {
-    await this.gameService.setDelay(2000);
+  async hiddeCards(delay: number = 2000) {
+    await this.gameService.setDelay(delay);
+    this.audioService.playCardFlipRandom();
     this.memoryDeck.forEach(card => card.isHidden = true);
   }
   
   selectDifficulty() {
-    
+    let difficulty = this.gameService.requestDifficulty(['Easy', 'Medium', 'Hard', 'Extreme']);
+    return difficulty.then((result: any) => {
+      switch (result) {
+        case 0:
+          return { deckSize: 12, lives: 10, viewDelay: 3000, cardSize: 'medium' };
+        case 1:
+          return { deckSize: 12, lives: 6, viewDelay: 2500, cardSize: 'medium' };
+        case 2:
+          return { deckSize: 24, lives: 6, viewDelay: 2000, cardSize: 'small' };
+        case 3:
+          return { deckSize: 24, lives: 3, viewDelay: 1800, cardSize: 'small' };
+        default:
+          return { deckSize: 24, lives: 12, viewDelay: 2000, cardSize: 'small' };
+      }
+    }
+    );
   }
 
 }
