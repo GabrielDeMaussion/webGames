@@ -33,3 +33,9 @@ export interface Dice{
     value: number;
     selected: boolean;
 }
+
+export interface MineSweeperBlock{
+    isMine: boolean;
+    isFlagged: boolean;
+    isRevealed: boolean;
+}

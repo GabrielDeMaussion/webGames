@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Card } from '../interfaces/models';
+import { Card, MineSweeperBlock } from '../interfaces/models';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { concat } from 'rxjs';
 
@@ -46,6 +46,7 @@ export class GameService {
     'ALFOMBRA', 'MARATON', 'UNIVERSO', 'CIRUJANO', 'DIAMANTE',
     'SERPIENTE', 'LAGARTIJA', 'CHIMENEA', 'ESCALERA'
   ];
+  mineSweeperGrid : MineSweeperBlock[][] = [];
 
   constructor() { }
 
@@ -119,6 +120,8 @@ export class GameService {
     return cards;
   }
 
+
+  //
   generateDices(quatity: number = 5) {
     let dices = [];
     for (let index = 0; index < quatity; index++) {
@@ -126,6 +129,34 @@ export class GameService {
     }
     
     return dices;
+  }
+
+
+  //
+  generateMineSweeperGrid(rows: number = 10, cols: number = 10, mines: number = 10) {
+    let minesLeft = mines;
+
+    for (let c = 0; c < cols; c++) {
+      this.mineSweeperGrid[c] = [];
+      for (let r = 0; r < rows; r++) {
+        this.mineSweeperGrid[c].push({
+          isMine: false,
+          isFlagged: false,
+          isRevealed: false
+        });
+      }
+    }
+
+    while (minesLeft > 0) {
+      let randomColumn = Math.floor(Math.random() * cols);
+      let randomRow = Math.floor(Math.random() * rows);
+
+      if (!this.mineSweeperGrid[randomColumn][randomRow].isMine) {
+        this.mineSweeperGrid[randomColumn][randomRow].isMine = true;
+        minesLeft--;
+      }
+    }
+    return this.mineSweeperGrid;
   }
 
 
