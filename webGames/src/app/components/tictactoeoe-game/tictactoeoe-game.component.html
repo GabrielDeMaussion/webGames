@@ -1,0 +1,28 @@
+<section class="min-vh-100 p-5 d-flex justify-content-center align-items-center">
+
+    <div class="p-3 d-flex flex-column gap-3">
+
+        <!-- Titulo -->
+        <div class="d-flex justify-content-between">
+            <h2>Ta te ti</h2>
+            <button type="button" class="btn bi-arrow-clockwise animated" [class]="!inGame ? 'btn-primary' : 'btn-outline-primary'" (click)="startGame()"></button>
+        </div>
+
+
+        <!-- Tablero -->
+        <div class="p-4 border rounded">
+            @for (row of tictactoeGrid; let colIndex = $index; track $index) {
+            <div class="row d-flex m-0">
+                @for (cell of row; let rowIndex = $index; track $index) {
+                <div class="d-flex justify-content-center align-items-center" [ngClass]="getBorder(colIndex, rowIndex)" style="width: 8rem; height: 8rem;" (click)="clickCell(rowIndex, colIndex)">
+                    <i [ngClass]="getIcon(cell)" style="font-size: 5rem;"></i>
+                </div>
+                }
+            </div>
+
+            }
+        </div>
+
+    </div>
+
+</section>

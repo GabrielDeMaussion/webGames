@@ -54,6 +54,10 @@ export const routes: Routes = [
             {
                 path: 'generala',
                 loadComponent:() => import('./components/generala-game/generala-game.component').then(m => m.GeneralaGameComponent)
+            },
+            {
+                path: 'tictactoe',
+                loadComponent:() => import('./components/tictactoeoe-game/tictactoeoe-game.component').then(m => m.TictactoeoeGameComponent)
             }
         ]
         
