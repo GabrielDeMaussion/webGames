@@ -11,6 +11,7 @@ export interface Preferences{
     username: string;
     darkMode: boolean;
     cardBack: string;
+    backgroundMusic: string;
     effectsVolume: number;
     musicVolume: number;
 }

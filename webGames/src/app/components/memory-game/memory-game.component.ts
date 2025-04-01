@@ -109,9 +109,9 @@ export class MemoryGameComponent implements OnInit {
         case 1:
           return { deckSize: 12, lives: 6, viewDelay: 2500, cardSize: 'medium' };
         case 2:
-          return { deckSize: 24, lives: 6, viewDelay: 2000, cardSize: 'small' };
+          return { deckSize: 24, lives: 10, viewDelay: 2000, cardSize: 'small' };
         case 3:
-          return { deckSize: 24, lives: 3, viewDelay: 1800, cardSize: 'small' };
+          return { deckSize: 24, lives: 6, viewDelay: 1800, cardSize: 'small' };
         default:
           return { deckSize: 24, lives: 12, viewDelay: 2000, cardSize: 'small' };
       }

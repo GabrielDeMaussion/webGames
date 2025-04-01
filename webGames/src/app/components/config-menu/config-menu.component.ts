@@ -10,7 +10,7 @@ import { AudioService } from '../../services/audio.service';
 @Component({
   selector: 'app-config-menu',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, FormsModule],
   templateUrl: './config-menu.component.html',
   styleUrl: './config-menu.component.scss'
 })
@@ -61,6 +61,15 @@ export class ConfigMenuComponent implements OnInit{
   changeTheme() {
     this.saveConfig();
     console.log("Cambiando modo oscuro a", this.preferences!.darkMode);
+  }
+  
+  changeBackgroundMusic(amount: number) {
+    let playlist = [...this.audioService.backgroundMusics]
+    let newIndex = playlist.indexOf(this.preferences!.backgroundMusic) + amount;
+    this.preferences!.backgroundMusic = playlist[newIndex < 0 ? playlist.length - 1 : newIndex >= playlist.length ? 0 : newIndex];
+    this.audioService.playMusic();
+    this.saveConfig();
+    console.log("Cambiando musica de fondo a", this.preferences!.backgroundMusic);
   }
   
   saveConfig() {

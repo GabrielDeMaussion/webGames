@@ -53,14 +53,15 @@ export class AudioService {
 
 
   //
-  playMusic(audioName: string, volume: number = -1) {
+  playMusic(audioName: string = '', volume: number = -1) {
     if (!this.backgroundMusic.paused) {
       return;
     }
 
     let defaultVolume = (this.storageService.getPreferences(this.userService.getUsername()) as Preferences).musicVolume
+    let defaultMusic = (this.storageService.getPreferences(this.userService.getUsername()) as Preferences).backgroundMusic
     this.backgroundMusic.loop = true;
-    this.backgroundMusic.src = 'audios/' + audioName;
+    this.backgroundMusic.src = 'audios/' + (audioName ? audioName : defaultMusic);
     this.backgroundMusic.volume = (volume != -1) ? volume : defaultVolume;
     this.backgroundMusic.play();
   }
@@ -80,7 +81,8 @@ export class AudioService {
     if (!this.backgroundMusic.paused) {
       this.backgroundMusic.pause();
     } else {
-      this.playMusic(this.backgroundMusics[0]);
+      let defaultMusic = (this.storageService.getPreferences(this.userService.getUsername()) as Preferences).backgroundMusic
+      this.playMusic(this.backgroundMusics[this.backgroundMusics.indexOf(defaultMusic)]);
     }
   }
 
