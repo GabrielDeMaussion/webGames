@@ -8,7 +8,7 @@
                 <i [class]="'gap-2 fs-3 ' + live"></i>
                 }
             </div>
-            <button class="btn btn-primary bi-arrow-clockwise fs-4" (click)="startGame()"></button>
+            <button type="button" class="btn bi-arrow-clockwise animated" [class]="!inGame ? 'btn-primary' : 'btn-outline-primary'" (click)="startGame()"></button>
         </div>
 
         <!-- tablero de juego -->

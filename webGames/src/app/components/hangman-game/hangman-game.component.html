@@ -6,7 +6,7 @@
                 @for (live of getLives(); track $index) {
                 <i [class]="'gap-2 fs-3 ' + live"></i>
                 }
-                <button class="btn btn-primary bi-arrow-clockwise fs-4 ms-auto" (click)="startGame()"></button>
+                <button type="button" class="btn bi-arrow-clockwise ms-auto" [class]="!inGame ? 'btn-primary' : 'btn-outline-primary'" (click)="startGame()"></button>
 
             </div>
             SVG

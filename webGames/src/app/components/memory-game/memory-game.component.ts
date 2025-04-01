@@ -16,6 +16,7 @@ export class MemoryGameComponent implements OnInit {
   memoryDeck: Card[] = [];
   selectedCards: Card[] = [];
   checkingMatch: boolean = false;
+  inGame: boolean = false;
   dificulty: any = {
     deckSize: 24,
     lives: 0,
@@ -34,6 +35,7 @@ export class MemoryGameComponent implements OnInit {
 
 
   async startGame() {
+    this.inGame = true;
     this.memoryDeck = [];
     this.dificulty = await this.selectDifficulty();
     this.memoryDeck = this.gameService.generateMemoryDeck(this.dificulty.deckSize);
@@ -84,9 +86,11 @@ export class MemoryGameComponent implements OnInit {
   checkGameStatus() {
     if (this.remainingLives <= 0) {
       this.gameService.sendAlert('Fin del juego', 'Te quedaste sin vidas', 'error');
+      this.inGame = false;
     }
     else if (this.memoryDeck.every(card => !card.isHidden)) {
       this.gameService.sendAlert('Fin del juego', 'Ganaste!', 'success');
+      this.inGame = false;
     }
   }
   
