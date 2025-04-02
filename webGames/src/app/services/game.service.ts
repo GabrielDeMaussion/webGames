@@ -66,6 +66,20 @@ export class GameService {
 
 
   //
+  generateSolitaryDeck(){
+    let deck: Card[] = [];
+
+    this.suits.forEach(suit => {
+      let color = (suit == 'heart' || suit == 'diamond') ? 'red' : 'black';
+      let cards = this.generateSwit(suit, color);
+      deck = deck.concat(cards);
+    });
+
+    return this.shuffle(deck);
+  }
+
+
+  //
   generateRandomWordleWord() {
     return this.wordleWords[Math.floor(Math.random() * this.wordleWords.length)];
   }

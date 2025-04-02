@@ -4,7 +4,8 @@
 </div>
 }
 @else {
-<div class="card bg-light border" [ngClass]="' card-'+ cardSize">
+<div class="card bg-light"
+    [ngClass]="[' card-'+ cardSize, card.selected ? 'border border-primary border-3' : 'border']">
     <!-- Top card -->
     <div class="row">
         <div class="col text-start ps-4" [ngClass]="getColor()">
