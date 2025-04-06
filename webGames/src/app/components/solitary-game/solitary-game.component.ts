@@ -57,7 +57,10 @@ export class SolitaryGameComponent implements OnInit {
 
   //
   getRandomCard() {
-    if (this.availableCards.length < 3 && this.solitaryDeck) {
+    if (this.solitaryDeck.length != 0) {
+      if (this.availableCards.length >= 3) {
+        this.solitaryDeck = [...this.availableCards.splice(0, 1), ...this.solitaryDeck];
+      }
       this.availableCards.push(this.solitaryDeck.pop()!);
     }
   }
@@ -69,31 +72,41 @@ export class SolitaryGameComponent implements OnInit {
     return pref.cardBack;
   }
 
-  clickCards(card: Card) {
-    alert('Clickeando')
-    if (card.isHidden) return;
+  clickCards(card: Card | null, event: MouseEvent, colIndex?: number) {
+    event.stopPropagation();
 
-    if (card.name === 'A') {
-      this.selectAces(card);
-    }
-    else if (this.selectedCards.length === 0) {
-      this.selectCards(card);
-    }
-    else {
-      this.moveTo(card);
-    }
+    if (card) {
+      if (card.isHidden) return;
 
+      if (card.name === 'A') {
+        this.selectAces(card);
+      }
+      else if (this.selectedCards.length === 0) {
+        this.selectCards(card);
+      }
+      else {
+        this.moveTo(card);
+      }
+    }
+    // 
+    else if (colIndex !== undefined && this.solitaryBoard[colIndex].length == 0) {
+      this.removeSelectedCards();
+
+      this.solitaryBoard[colIndex!].push(...this.selectedCards);
+
+      this.selectedCards.forEach((card) => {
+        card.selected = false;
+      });
+
+      this.selectedCards = [];
+    }
     this.revealLastCard();
-    
-    console.log('Cartas seleccionadas:', this.selectedCards);
-    console.log('Cartas en tablero:', this.solitaryBoard);
-    
+    this.checkWin();
   }
 
 
   //
   selectCards(card: Card) {
-    alert('Seleccionando')
     //Si no es carta auxiliar (Esta en tablero)
     if (!this.availableCards.includes(card)) {
       let cardColIndex = this.solitaryBoard.findIndex((col) => col.includes(card));
@@ -107,13 +120,12 @@ export class SolitaryGameComponent implements OnInit {
     else {
       card.selected = true;
       this.selectedCards.push(card);
-    }    
+    }
   }
 
 
   //
   selectAces(card: Card) {
-    alert('As')
     if (!this.availableCards.includes(card)) {
       let cardColIndex = this.solitaryBoard.findIndex((col) => col.includes(card));
       let cardRowIndex = this.solitaryBoard[cardColIndex].indexOf(card);
@@ -129,59 +141,32 @@ export class SolitaryGameComponent implements OnInit {
 
 
   //
-  moveTo(card: Card | null, row: Card[] = []) {
+  moveTo(card: Card) {
     let order = ['K', 'Q', 'J', '10', '9', '8', '7', '6', '5', '4', '3', '2'];
 
-    if ((!card && row.length > 0 ) || !this.selectCards) return;
-    alert('Moviendo')
+    if (!card || !this.selectCards || this.availableCards.includes(card)) return;
     //Si se intenta colocar sobre una carta
-    if (card) {
-      alert('Colocando')
-      //Si el movimiento es valido, la coloca
-      let colIndex = this.solitaryBoard.findIndex((col) => col.includes(card));
-      let entryCard = this.selectedCards[0];
 
-      if (
-        order.indexOf(card.name) === order.indexOf(entryCard.name) - 1 &&
-        card.color !== entryCard.color
-      ) {
-        this.removeSelectedCards();
-        this.solitaryBoard[colIndex].push(...this.selectedCards);
-      }
-      
-      this.selectedCards.forEach((card) => {
-        card.selected = false;
-      });
-      this.selectedCards = [];
+    //Si el movimiento es valido, la coloca
+    let colIndex = this.solitaryBoard.findIndex((col) => col.includes(card));
+    let entryCard = this.selectedCards[0];
+
+    if (
+      order.indexOf(card.name) === order.indexOf(entryCard.name) - 1 &&
+      card.color !== entryCard.color
+    ) {
+      this.removeSelectedCards();
+      this.solitaryBoard[colIndex].push(...this.selectedCards);
     }
 
-    //Si se intenta colocar sobre una columna vacia
-    else if (row && row.length === 0) {
-      alert('Colocando en vacio')
-      this.removeSelectedCards();
-      console.log('Fila antes de pushear', row);
-      console.log('Cartas seleccionadas:', this.selectedCards);
-      
-      row.push(...this.selectedCards);
-      
-      console.log('Fila despues de pushear', row);
-      console.log('Cartas seleccionadas despues:', this.selectedCards);
-      
-      this.selectedCards.forEach((card) => {
-        card.selected = false;
-      });
-      this.selectedCards = [];
-    }    
+    this.selectedCards.forEach((card) => {
+      card.selected = false;
+    });
+    this.selectedCards = [];
   }
-  
-  test(row: Card[]) {
-    row.push(...this.selectedCards);
-  }
-
 
   //Elimina la/s cartas seleccionadas de los arrays
   removeSelectedCards() {
-    alert('Limpiando')
     this.solitaryBoard = this.solitaryBoard.map((col) =>
       col.filter((card) => !card.selected)
     );
@@ -245,61 +230,30 @@ export class SolitaryGameComponent implements OnInit {
         selected: false,
         isHidden: false
       }
-
     ]
   }
 
+  //
+  async checkWin() {
+    let order = ['K', 'Q', 'J', '10', '9', '8', '7', '6', '5', '4', '3', '2'];
+    if (this.acesCards.length != 4 || this.solitaryDeck.length != 0) return;
 
+    //Verificamos cada columna del tablero
+    for (const col of this.solitaryBoard) {
+      //Si la columna está vacía, la ignoramos
+      if (col.length === 0) continue;
 
-  // //
-  // selectCards(card: Card) {
-  //   if (card.isHidden) return;
+      //La columna no vacía debe tener exactamente 12 cartas
+      if (col.length !== order.length) return;
 
-  //   if (card.name === 'A') {
+      //Verificamos el orden de las cartas en la columna
+      for (let i = 0; i < order.length; i++) {
+        if (col[i].name !== order[i]) return;
+      }
+    }
 
-  //     if(!this.availableCards.includes(card)) {
-  //       let cardColIndex = this.solitaryBoard.findIndex((col) => col.includes(card));
-  //       let cardRowIndex = this.solitaryBoard[cardColIndex].indexOf(card);
-  //       this.solitaryBoard[cardColIndex].splice(cardRowIndex, 1);
-  //       this.acesCards.push(card);
-  //     }
-  //     else {
-  //       let cardColIndex = this.availableCards.indexOf(card);
-  //       this.availableCards.splice(cardColIndex, 1);
-  //       this.acesCards.push(card);
-  //     }
-
-  //     this.revealLastCard();
-  //     return;
-  //   }
-
-
-  //   //Si esta seleccionando
-  //   if (this.selectedCards.length === 0) {
-
-  //     //Si no es carta auxiliar (Esta en tablero)
-  //     if (!this.availableCards.includes(card)) {
-  //       let cardColIndex = this.solitaryBoard.findIndex((col) => col.includes(card));
-  //       let cardRowIndex = this.solitaryBoard[cardColIndex].findIndex((c) => c === card);
-
-  //       for (let row = cardRowIndex; row < this.solitaryBoard[cardColIndex].length; row++) {
-  //         this.solitaryBoard[cardColIndex][row].selected = true;
-  //         this.selectedCards.push(this.solitaryBoard[cardColIndex][row]);
-  //       }
-  //     }
-
-  //     //Si es carta auxiliar (Esta en mazo)
-  //     else if (this.availableCards.includes(card)) {
-  //       card.selected = true;
-  //       this.selectedCards.push(card);
-  //     }
-  //   } 
-
-  //   //Si esta colocando
-  //   else {
-  //     this.moveTo(card);
-  //   }
-
-  //   this.revealLastCard();
-  // }
+    //Si pasamos todas las validaciones, ganamos
+    await this.gameService.setDelay(500);
+    this.gameService.sendAlert('Ganaste!', 'Felicidades, ganaste la partida', 'success');
+  }
 }

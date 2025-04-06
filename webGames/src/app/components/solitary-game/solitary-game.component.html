@@ -8,7 +8,7 @@
                     (click)="getRandomCard()" style="width: 172px; height: 248px;">
 
                 @for (card of availableCards; track $index) {
-                <div class="animated-card" style="height: 50px;" role="button" (click)="clickCards(card)">
+                <div class="animated-card" style="height: 50px;" role="button" (click)="clickCards(card, $event)">
                     <app-card [card]="card" [cardSize]="'small'" />
                 </div>
                 }
@@ -17,20 +17,13 @@
 
             <!-- Board -->
             <div class="d-flex col justify-content-center gap-2 p-4 border">
-                @for (row of solitaryBoard; track $index) {
+                @for (row of solitaryBoard; let colIndex = $index ; track $index) {
                 <div class="d-block border" style="min-width: 160px; min-height: 234px; padding-bottom: 184px;"
-                    role="button">
+                    role="button" (click)="clickCards(null, $event, colIndex)">
                     @for (card of row; track $index) {
-                    <div class="animated-card" style="height: 50px;" (click)="clickCards(card)">
+                    <div class="animated-card" style="height: 50px;" (click)="clickCards(card, $event)">
                         <app-card [card]="card" [cardSize]="'small'" />
                     </div>
-                    }
-                    @if (row.length === 0) {
-                    @for (card of selectedCards; track $index) {
-                    <div class="animated-card opacity-25" style="height: 50px;" (click)="moveTo(null, row)">
-                        <app-card [card]="card" [cardSize]="'small'" />
-                    </div>
-                    }
                     }
                 </div>
                 }
@@ -46,6 +39,5 @@
                 }
             </div>
         </div>
-
     </div>
 </section>
