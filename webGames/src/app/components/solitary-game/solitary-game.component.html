@@ -1,6 +1,10 @@
 <section class="min-vh-100 p-5">
     <div class="p-3 px-5">
-        <h1 class="text-center">Solitario</h1>
+        <div class="d-flex justify-content-between align-items-center mb-3 p-2">
+            <div></div>
+            <h1 class="text-center">Solitario</h1>
+            <button type="button" class="btn bi-arrow-clockwise animated" [class]="!inGame ? 'btn-primary' : 'btn-outline-primary'" (click)="startGame()"></button>
+        </div>
         <div class="row h-100">
             <!-- Deck -->
             <div class="col-auto p-4 border">
@@ -16,7 +20,7 @@
 
 
             <!-- Board -->
-            <div class="d-flex col justify-content-center gap-2 p-4 border">
+            <div class="d-flex col justify-content-center gap-2 p-4 border" style="min-height: 836px;">
                 @for (row of solitaryBoard; let colIndex = $index ; track $index) {
                 <div class="d-block border" style="min-width: 160px; min-height: 234px; padding-bottom: 184px;"
                     role="button" (click)="clickCards(null, $event, colIndex)">
@@ -31,12 +35,15 @@
             </div>
 
             <!-- Aces -->
-            <div class="col-auto p-4 border d-flex flex-wrap gap-3" style="width: 416px;">
-                @for (card of fakeCards; track $index) {
-                <div class="animated-card mb-2" [ngClass]="getOpacity(card)">
-                    <app-card [card]="card" [cardSize]="'small'" />
+            <div class="col-auto p-4 border" style="width: 382px;">
+                <div class="row">
+                    @for (card of fakeCards; track $index) {
+                        <div class="col-6 animated-card mb-2" [ngClass]="getOpacity(card)">
+                            <app-card [card]="card" [cardSize]="'small'" />
+                        </div>
+                        }
                 </div>
-                }
+                
             </div>
         </div>
     </div>

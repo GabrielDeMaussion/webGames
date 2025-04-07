@@ -5,6 +5,8 @@ import { CardComponent } from '../assets/card/card.component';
 import { StorageService } from '../../services/storage.service';
 import { UserService } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
+import { AudioService } from '../../services/audio.service';
+import { tick } from '@angular/core/testing';
 
 @Component({
   selector: 'app-solitary-game',
@@ -20,10 +22,12 @@ export class SolitaryGameComponent implements OnInit {
   availableCards: Card[] = [];
   acesCards: Card[] = [];
   fakeCards: Card[] = [];
+  inGame : boolean = false;
 
   constructor(private readonly gameService: GameService,
     private readonly storageService: StorageService,
-    private readonly userService: UserService
+    private readonly userService: UserService,
+    private readonly audioService: AudioService,
   ) {
   }
 
@@ -39,11 +43,14 @@ export class SolitaryGameComponent implements OnInit {
     this.solitaryDeck = this.gameService.generateSolitaryDeck();
     this.dealCards();
     this.createFakeCards();
+    this.inGame = true;
+    this.availableCards = [];
   }
 
 
   //
   dealCards() {
+    this.solitaryBoard = [];
     for (let col = 0; col < 7; col++) {
       this.solitaryBoard.push([]);
       for (let row = 0; row < col + 1; row++) {
@@ -52,6 +59,7 @@ export class SolitaryGameComponent implements OnInit {
         this.solitaryBoard[col].push(card);
       }
     }
+    this.audioService.playDeckShuffle();
   }
 
 
@@ -63,6 +71,7 @@ export class SolitaryGameComponent implements OnInit {
       }
       this.availableCards.push(this.solitaryDeck.pop()!);
     }
+    this.audioService.playCardDealRandom();
   }
 
 
@@ -74,18 +83,21 @@ export class SolitaryGameComponent implements OnInit {
 
   clickCards(card: Card | null, event: MouseEvent, colIndex?: number) {
     event.stopPropagation();
+    if(!this.inGame) return;
 
     if (card) {
       if (card.isHidden) return;
 
       if (card.name === 'A') {
         this.selectAces(card);
+        this.audioService.playCardDealRandom();
       }
       else if (this.selectedCards.length === 0) {
         this.selectCards(card);
       }
       else {
         this.moveTo(card);
+        this.audioService.playCardDealRandom();
       }
     }
     // 
@@ -99,6 +111,7 @@ export class SolitaryGameComponent implements OnInit {
       });
 
       this.selectedCards = [];
+      this.audioService.playCardDealRandom();
     }
     this.revealLastCard();
     this.checkWin();
@@ -184,7 +197,11 @@ export class SolitaryGameComponent implements OnInit {
     for (let col = 0; col < this.solitaryBoard.length; col++) {
       if (this.solitaryBoard[col].length === 0) continue;
       let lastCard = this.solitaryBoard[col][this.solitaryBoard[col].length - 1];
-      lastCard.isHidden = false;
+      
+      if (lastCard.isHidden) {
+        lastCard.isHidden = false;
+        this.audioService.playCardFlipRandom();
+      }
     }
   }
 
@@ -238,21 +255,17 @@ export class SolitaryGameComponent implements OnInit {
     let order = ['K', 'Q', 'J', '10', '9', '8', '7', '6', '5', '4', '3', '2'];
     if (this.acesCards.length != 4 || this.solitaryDeck.length != 0) return;
 
-    //Verificamos cada columna del tablero
     for (const col of this.solitaryBoard) {
-      //Si la columna está vacía, la ignoramos
       if (col.length === 0) continue;
 
-      //La columna no vacía debe tener exactamente 12 cartas
       if (col.length !== order.length) return;
 
-      //Verificamos el orden de las cartas en la columna
       for (let i = 0; i < order.length; i++) {
         if (col[i].name !== order[i]) return;
       }
     }
 
-    //Si pasamos todas las validaciones, ganamos
+    this.inGame = false;
     await this.gameService.setDelay(500);
     this.gameService.sendAlert('Ganaste!', 'Felicidades, ganaste la partida', 'success');
   }
