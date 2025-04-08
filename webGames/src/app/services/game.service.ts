@@ -46,10 +46,10 @@ export class GameService {
     'SERPIENTE', 'LAGARTIJA', 'CHIMENEA', 'ESCALERA'
   ];
   battleshipPieces: Ship[] = [
-    { name: 'Portaaviones', size: 5, rowCoordinate: 0, colCoordinate: 0, isSunk: false, model: 'P', horizontal: false },
-    { name: 'Buque de guerra', size: 4, rowCoordinate: 0, colCoordinate: 0, isSunk: false, model: 'B', horizontal: false },
-    { name: 'Destructor', size: 3, rowCoordinate: 0, colCoordinate: 0, isSunk: false, model: 'D', horizontal: false },
-    { name: 'Submarino', size: 2, rowCoordinate: 0, colCoordinate: 0, isSunk: false, model: 'S', horizontal: false }
+    { name: 'Portaaviones', size: 5, rowCoordinate: 0, colCoordinate: 0, isSunk: false, model: 'P', vertical: false },
+    { name: 'Buque de guerra', size: 4, rowCoordinate: 0, colCoordinate: 0, isSunk: false, model: 'B', vertical: false },
+    { name: 'Destructor', size: 3, rowCoordinate: 0, colCoordinate: 0, isSunk: false, model: 'D', vertical: false },
+    { name: 'Submarino', size: 2, rowCoordinate: 0, colCoordinate: 0, isSunk: false, model: 'S', vertical: false }
   ];
   mineSweeperGrid: MineSweeperBlock[][] = [];
 
@@ -155,11 +155,13 @@ export class GameService {
   generateBattleshipPieces(carrierQuantity: number = 1, battleshipQuantity: number = 1, destroyerQuantity: number = 2, submarineQuantity: number = 3) {
     let pieces = [];
 
-    for (let index = 0; index < carrierQuantity; index++) pieces.push(this.battleshipPieces[0]);
-    for (let index = 0; index < battleshipQuantity; index++) pieces.push(this.battleshipPieces[1]);
-    for (let index = 0; index < destroyerQuantity; index++) pieces.push(this.battleshipPieces[2]);
-    for (let index = 0; index < submarineQuantity; index++) pieces.push(this.battleshipPieces[3]);
+    let battleshipPieces = this.battleshipPieces.map(piece => ({ ...piece }));
 
+    for (let index = 0; index < carrierQuantity; index++) pieces.push({...battleshipPieces[0]});
+    for (let index = 0; index < battleshipQuantity; index++) pieces.push({...battleshipPieces[1]});
+    for (let index = 0; index < destroyerQuantity; index++) pieces.push({...battleshipPieces[2]});
+    for (let index = 0; index < submarineQuantity; index++) pieces.push({...battleshipPieces[3]});
+    
     return pieces;
   }
 
@@ -183,13 +185,12 @@ export class GameService {
 
         do {
           available = true;
-          ship.horizontal = Math.random() < 0.5;
-
-          ship.rowCoordinate = ship.horizontal ? Math.floor(Math.random() * rows) : Math.floor(Math.random() * (rows - (ship.size + 1)));
-          ship.colCoordinate = ship.horizontal ? Math.floor(Math.random() * (cols - (ship.size + 1))) : Math.floor(Math.random() * cols);
+          ship.vertical = Math.random() < 0.5;
+          ship.rowCoordinate = ship.vertical ? Math.floor(Math.random() * rows) : Math.floor(Math.random() * (rows - (ship.size + 1)));
+          ship.colCoordinate = ship.vertical ? Math.floor(Math.random() * (cols - (ship.size + 1))) : Math.floor(Math.random() * cols);
 
           for (let i = 0; i < ship.size; i++) {
-            if (ship.horizontal) {
+            if (ship.vertical) {
               if (grid[ship.colCoordinate + i][ship.rowCoordinate] !== '') {
                 available = false;
                 break;
@@ -204,7 +205,7 @@ export class GameService {
         } while (!available);
 
         for (let i = 0; i < ship.size; i++) {
-          if (ship.horizontal) {
+          if (ship.vertical) {
             if (grid[ship.colCoordinate + i][ship.rowCoordinate] !== '') {
               break;
             }

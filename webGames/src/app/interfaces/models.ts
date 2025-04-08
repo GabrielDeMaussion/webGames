@@ -47,6 +47,6 @@ export interface Ship{
     rowCoordinate : number;
     colCoordinate: number;
     isSunk: boolean;
-    horizontal: boolean;
+    vertical: boolean;
     model : string;
 }
