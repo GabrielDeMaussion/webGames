@@ -108,6 +108,14 @@ export class AudioService {
     this.playAudio("success.mp3");
   }
 
+  playWater(){
+    this.playAudio("waterDrop.mp3");
+  }
+
+  playShot(){
+    this.playAudio("shot.mp3");
+  }
+
   playDiceRollRandom(){
     let randomIndex = Math.floor(Math.random() * this.diceRollAudios.length);
     this.playAudio(this.diceRollAudios[randomIndex]);
