@@ -58,6 +58,14 @@ export const routes: Routes = [
             {
                 path: 'tictactoe',
                 loadComponent:() => import('./components/tictactoeoe-game/tictactoeoe-game.component').then(m => m.TictactoeoeGameComponent)
+            },
+            {
+                path: 'crosswords',
+                loadComponent:() => import('./components/crosswords-game/crosswords-game.component').then(m => m.CrosswordsGameComponent)
+            },
+            {
+                path: 'battleship',
+                loadComponent:() => import('./components/battleship-game/battleship-game.component').then(m => m.BattleshipGameComponent)
             }
         ]
         

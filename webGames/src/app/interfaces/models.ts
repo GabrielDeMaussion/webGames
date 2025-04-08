@@ -40,3 +40,13 @@ export interface MineSweeperBlock{
     isFlagged: boolean;
     isRevealed: boolean;
 }
+
+export interface Ship{
+    name: string;
+    size: number;
+    rowCoordinate : number;
+    colCoordinate: number;
+    isSunk: boolean;
+    horizontal: boolean;
+    model : string;
+}

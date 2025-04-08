@@ -1,0 +1,40 @@
+<section class="min-vh-100 p-5">
+    <div class="p-3">
+        <div class="d-flex justify-content-between align-items-center mb-3 p-2">
+            <div></div>
+            <h1>Batalla Naval</h1>
+            <button type="button" class="btn bi-arrow-clockwise animated" [class]="!inGame ? 'btn-primary' : 'btn-outline-primary'" (click)="startGame()"></button>
+        </div>
+        <hr>
+        <div class="row justify-content-evenly">
+            <div class="col-auto">
+                <h3 class="text-center">Grilla de {{playerName}}</h3>
+                <div class="border rounded p-3">
+                    @for (row of playerGrid; let colIndex = $index ; track $index) {
+                        <div class="row gap-1 mb-1">
+                            @for (cell of row; let rowIndex = $index ; track $index) {
+                            <i class="w-auto fs-1" style="width: 4rem; height: 4rem;" [ngClass]="getGridIcon(colIndex, rowIndex, true)" role="button"></i>
+                            }
+                        </div>
+                        }
+                </div>
+            </div>
+
+            <div class="col-auto border border-end border-3 p-0"></div>
+
+            <div class="col-auto">
+                <h3 class="text-center">Grilla de Paco</h3>
+                <div class="border rounded p-3">
+                    @for (row of computerGrid; let colIndex = $index ; track $index) {
+                        <div class="row gap-1 mb-1">
+                            @for (cell of row; let rowIndex = $index ; track $index) {
+                            <i class="w-auto fs-1" style="width: 4rem; height: 4rem;" [ngClass]="getGridIcon(colIndex, rowIndex, false)" role="button"
+                            (click)="shoot(colIndex, rowIndex)"></i>
+                            }
+                        </div>
+                        }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

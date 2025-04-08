@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Card, MineSweeperBlock } from '../interfaces/models';
+import { Card, MineSweeperBlock, Ship } from '../interfaces/models';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
-import { concat } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +45,12 @@ export class GameService {
     'ALFOMBRA', 'MARATON', 'UNIVERSO', 'CIRUJANO', 'DIAMANTE',
     'SERPIENTE', 'LAGARTIJA', 'CHIMENEA', 'ESCALERA'
   ];
+  battleshipPieces: Ship[] = [
+    { name: 'Portaaviones', size: 5, rowCoordinate: 0, colCoordinate: 0, isSunk: false, model: 'P', horizontal: false },
+    { name: 'Buque de guerra', size: 4, rowCoordinate: 0, colCoordinate: 0, isSunk: false, model: 'B', horizontal: false },
+    { name: 'Destructor', size: 3, rowCoordinate: 0, colCoordinate: 0, isSunk: false, model: 'D', horizontal: false },
+    { name: 'Submarino', size: 2, rowCoordinate: 0, colCoordinate: 0, isSunk: false, model: 'S', horizontal: false }
+  ];
   mineSweeperGrid: MineSweeperBlock[][] = [];
 
   constructor() { }
@@ -66,7 +71,7 @@ export class GameService {
 
 
   //
-  generateSolitaryDeck(){
+  generateSolitaryDeck() {
     let deck: Card[] = [];
 
     this.suits.forEach(suit => {
@@ -147,6 +152,78 @@ export class GameService {
 
 
   //
+  generateBattleshipPieces(carrierQuantity: number = 1, battleshipQuantity: number = 1, destroyerQuantity: number = 2, submarineQuantity: number = 3) {
+    let pieces = [];
+
+    for (let index = 0; index < carrierQuantity; index++) pieces.push(this.battleshipPieces[0]);
+    for (let index = 0; index < battleshipQuantity; index++) pieces.push(this.battleshipPieces[1]);
+    for (let index = 0; index < destroyerQuantity; index++) pieces.push(this.battleshipPieces[2]);
+    for (let index = 0; index < submarineQuantity; index++) pieces.push(this.battleshipPieces[3]);
+
+    return pieces;
+  }
+
+
+  //
+  generateBattleshipGrid(rows: number = 10, cols: number = 10, ships: Ship[] = []) {
+    let grid: string[][] = [];
+
+    for (let col = 0; col < cols; col++) {
+      grid[col] = [];
+
+      for (let row = 0; row < rows; row++) {
+        grid[col].push('');
+      }
+    }
+
+    if (ships.length > 0) {
+      for (let index = 0; index < ships.length; index++) {
+        let ship = ships[index];
+        let available = true;
+
+        do {
+          available = true;
+          ship.horizontal = Math.random() < 0.5;
+
+          ship.rowCoordinate = ship.horizontal ? Math.floor(Math.random() * rows) : Math.floor(Math.random() * (rows - (ship.size + 1)));
+          ship.colCoordinate = ship.horizontal ? Math.floor(Math.random() * (cols - (ship.size + 1))) : Math.floor(Math.random() * cols);
+
+          for (let i = 0; i < ship.size; i++) {
+            if (ship.horizontal) {
+              if (grid[ship.colCoordinate + i][ship.rowCoordinate] !== '') {
+                available = false;
+                break;
+              }
+            } else {
+              if (grid[ship.colCoordinate][ship.rowCoordinate + i] !== '') {
+                available = false;
+                break;
+              }
+            }
+          }
+        } while (!available);
+
+        for (let i = 0; i < ship.size; i++) {
+          if (ship.horizontal) {
+            if (grid[ship.colCoordinate + i][ship.rowCoordinate] !== '') {
+              break;
+            }
+            grid[ship.colCoordinate + i][ship.rowCoordinate] = ship.model;
+          } else {
+            if (grid[ship.colCoordinate][ship.rowCoordinate + i] !== '') {
+              break;
+            }
+            grid[ship.colCoordinate][ship.rowCoordinate + i] = ship.model;
+          }
+        }
+      }
+    }
+
+    return grid;
+  }
+
+
+  //
   generateMineSweeperGrid(rows: number = 10, cols: number = 10, mines: number = 10) {
     let minesLeft = mines;
 
@@ -211,7 +288,7 @@ export class GameService {
         showConfirmButton: false,
         scrollbarPadding: false,
         allowOutsideClick: false,
-        html: options.map((option, index) => 
+        html: options.map((option, index) =>
           `<button class="swal2-confirm swal2-styled opcion-btn" data-index="${index}">${option}</button>`
         ).join(''),
         didOpen: () => {
