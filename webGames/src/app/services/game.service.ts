@@ -53,7 +53,28 @@ export class GameService {
   ];
   mineSweeperGrid: MineSweeperBlock[][] = [];
 
+  gameCards = [
+    { title: 'Generala', description: 'Juego de dados por turnos donde se busca lograr combinaciones específicas para sumar puntos, como poker o escalera.', image: 'generala.jpeg', route: '/generala' },
+    { title: 'Blackjack', description: 'Juego de cartas donde el objetivo es sumar 21 sin pasarse, compitiendo contra el crupier.', image: 'blackjack.png', route: '/blackjack' },
+    { title: 'Solitario', description: 'Clásico juego de cartas para un jugador, donde se organiza la baraja en secuencia y por palo.', image: 'solitary.png', route: '/solitary' },
+    { title: 'Ahorcado', description: 'Clásico pasatiempo de adivinanza de palabras letra por letra antes de que se complete el dibujo de un ahorcado.', image: 'hangman.png', route: '/hangman' },
+    { title: 'Buscaminas', description: 'Juego de lógica donde se descubre un campo minado sin detonar bombas, deduciendo su ubicación con pistas numéricas.', image: 'minesweeper.png', route: '/minesweeper' },
+    { title: 'Batalla Naval', description: 'Juego de estrategia por turnos donde los jugadores intentan hundir la flota enemiga adivinando las coordenadas de sus barcos ocultos.', image: 'battleship.png', route: '/battleship' }, 
+    { title: 'Memoria', description: 'Desafío para la concentración donde se deben encontrar pares de cartas iguales volteándolas por turnos.', image: 'memory.png', route: '/memory' },
+    { title: 'Wordle', description: 'Juego de palabras donde se intenta adivinar una palabra de cinco letras en seis intentos, con pistas de colores.', image: 'wordle.png', route: '/wordle' },
+    { title: 'Sudoku', description: 'Rompecabezas numérico en el que se completan celdas con cifras del 1 al 9 sin repetir en filas, columnas ni bloques.', image: 'sudoku.png', route: '/sudoku' },
+    { title: 'Ta Te Ti', description: 'Juego de estrategia rápida en el que dos jugadores intentan alinear tres símbolos iguales en una cuadrícula 3x3.', image: 'tictactoe.png', route: '/tictactoe' },
+    { title: 'Ajedrez', description: 'Juego de estrategia por turnos entre dos jugadores, donde el objetivo es dar jaque mate al rey rival.', image: 'chess.png', route: '/chess' },
+    { title: 'Crucigrama', description: 'Pasatiempo de palabras donde se completan casillas con términos a partir de definiciones dadas, cruzándolos entre sí.', image: 'crosswords.png', route: '/crosswords' },
+    { title: 'Cuatro en linea', description: 'Juego de estrategia para dos jugadores que consiste en alinear cuatro fichas del mismo color en fila, columna o diagonal dentro de una rejilla vertical antes que el oponente.', image: 'fourinline.png', route: '/fourinline' },]
+
   constructor() { }
+
+
+  //
+  getGameCards() {
+    return this.gameCards;
+  }
 
 
   //

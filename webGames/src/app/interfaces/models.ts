@@ -50,3 +50,10 @@ export interface Ship{
     vertical: boolean;
     model : string;
 }
+
+export interface GameCard{
+    title: string;
+    description: string;
+    image: string;
+    route: string;
+}
